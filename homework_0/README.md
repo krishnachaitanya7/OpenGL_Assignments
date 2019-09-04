@@ -1,5 +1,5 @@
 # Homework - 1
-1) The frame rate reported by the program when the window is different sizes, specifically 1x1, 300x300 and full screen. Explain your results.
+Q1) The frame rate reported by the program when the window is different sizes, specifically 1x1, 300x300 and full screen. Explain your results.
    
 Ans) When I run the gears program in my personal laptop with Intel i5 and integrated intel HD graphics below the statistics:  
 
