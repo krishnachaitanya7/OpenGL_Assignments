@@ -19,11 +19,7 @@
 #include <stdio.h>
 #include <string.h>
 #define GL_GLEXT_PROTOTYPES
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
 #include <GL/glut.h>
-#endif
 
 #ifndef M_PI
 #define M_PI 3.14159265
@@ -388,13 +384,14 @@ visible(int vis)
     glutIdleFunc(NULL);
 }
 
+
+
 int main(int argc, char *argv[])
 {
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
-
   glutInitWindowPosition(0, 0);
-  glutInitWindowSize(1024, 768);
+  glutInitWindowSize(300, 300);
   win = glutCreateWindow("Gears");
   init(argc, argv);
 
