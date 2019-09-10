@@ -4,10 +4,12 @@ Q1) The frame rate reported by the program when the window is different sizes, s
 Ans) When I run the gears program in my personal laptop with Intel i5 and integrated intel HD graphics with ubuntu 19.04 OS, on average below the statistics:  
 
 | Resolution | Vertical sync on FPS | Vertical sync off FPS |  
-|------------|-----|-----| 
+|:------------:|:-----:|:-----:| 
 | 1 x 1      | 60   | 1500 |  
 | 300 x 300  | 60  | 1375 |  
 | 1366 x 768 | 60  | 570 |  
+
+
 
 You can see with Vertical Sync On(vblank_mode=0) the FPS is always constant, but with Vertical sync off (vblank_mode=0) you get higher FPS. "vblank_mode" in intel graphics and "__GL_SYNC_TO_VBLANK" in Nvidia graphics are same.
 
