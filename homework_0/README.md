@@ -7,7 +7,7 @@ Ans) When I run the gears program in my personal laptop with Intel i5 and integr
 |------------|-----|-----| 
 | 1 x 1      | 60   | 1500 |  
 | 300 x 300  | 60  | 1375 |  
-| 1024 x 768 | 60  | 570 |  
+| 1366 x 768 | 60  | 570 |  
 
 You can see with Vertical Sync On(vblank_mode=0) the FPS is always constant, but with Vertical sync off (vblank_mode=0) you get higher FPS. "vblank_mode" in intel graphics and "__GL_SYNC_TO_VBLANK" in Nvidia graphics are same.
 
