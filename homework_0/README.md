@@ -21,6 +21,7 @@ When vertical sync is off, the refresh rate happens at the speed of the graphics
      
 Q2) On some systems the frame rate is a small round number like 60 or 72 or 85 frames per second, and sometimes it is a large number, thousands or tens of thousands of frames per second. Explain why this occurs.  
 Ans) On some systems by default the vblank_mode=1 which gives smaller FPS when the gears program executes. On the other hand in some systems vblank_mode=0 by default which attributes to high FPS speeds. Also some other processes running in the OS will effect the final FPS if vertical sync is off.    
+#ToDo: Write about screen tearing and power consumption
 
 Q3) Time required to complete the assignment.  
 Ans) 1.5 hours.
