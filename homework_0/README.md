@@ -13,8 +13,8 @@ When I run the gears program in desktop PC with Intel Xeon with RTX 2080 Super g
 
 | Resolution | FPS |  
 |------------|-----|  
-| 1 x 1      | 1   |  
-| 300 x 300  | 30  |  
+| 1 x 1      | 60   |  
+| 300 x 300  | 36  |  
 | 1024 x 768 | 60  | 
 
 You can see a lot of variation.
