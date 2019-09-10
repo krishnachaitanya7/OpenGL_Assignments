@@ -5,8 +5,8 @@ Ans) When I run the gears program in my personal laptop with Intel i5 and integr
 
 | Resolution | FPS |  
 |------------|-----|  
-| 1 x 1      | 1   |  
-| 300 x 300  | 30  |  
+| 1 x 1      | 60   |  
+| 300 x 300  | 60  |  
 | 1024 x 768 | 60  |  
 
 When I run the gears program in desktop PC with Intel Xeon with RTX 2080 Super graphics card below are the statistics

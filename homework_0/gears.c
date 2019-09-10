@@ -394,7 +394,7 @@ int main(int argc, char *argv[])
   glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 
   glutInitWindowPosition(0, 0);
-  glutInitWindowSize(300, 300);
+  glutInitWindowSize(1024, 768);
   win = glutCreateWindow("Gears");
   init(argc, argv);
 
