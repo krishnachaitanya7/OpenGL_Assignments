@@ -11,7 +11,7 @@ Ans) When I run the gears program in my personal laptop with Intel i5 and integr
 
 You can see with Vertical Sync On(vblank_mode=0) the FPS is always constant, but with Vertical sync off (vblank_mode=0) you get higher FPS. "vblank_mode" in intel graphics and "__GL_SYNC_TO_VBLANK" in Nvidia graphics are same.
 
-vblank_mode=0 ignores the monitor refresh rate and refreshes at the speed of the graphics card's highest possible speed. Ultimately screen refresh rate can never achieve the speed of graphics card anyways. Even if it updates at that speed, it's just for namesake, and human eye can't see it as the monitor itself cannot show it. On the other hand, this can be used as a small benchmarking result for the graphics card (Which they did in the old days).
+vblank_mode=0 ignores the monitor refresh rate and refreshes at the speed of the graphics card's highest possible speed. Screen refresh rate can never achieve the speed of graphics card anyways. Even if it updates at that speed, it's just for namesake, and human eye can't see it as the monitor itself cannot show it. On the other hand, this can be used as a small benchmarking result for the graphics card (Which they did in the old days).
 
 When vertical sync is on, the refresh happens at the refresh rate of the monitor, which is usually lower than graphics card speed, so for all resolutions (1x1, 300x300, 1366x768), the FPS was same which 60 FPS.
 
