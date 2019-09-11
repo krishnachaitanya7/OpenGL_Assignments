@@ -1,4 +1,5 @@
-# Homework - 1
+# Homework - 1  
+## Name: Kodur Krishna Chaitanya SID: 109258186
 Q1) The frame rate reported by the program when the window is different sizes, specifically 1x1, 300x300 and full screen. Explain your results.
    
 Ans) When I run the gears program in my personal laptop with Intel i5 and integrated intel HD graphics with ubuntu 19.04 OS, on average below the statistics:  
