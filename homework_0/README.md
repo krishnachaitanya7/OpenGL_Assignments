@@ -4,7 +4,7 @@ Q1) The frame rate reported by the program when the window is different sizes, s
    
 Ans) When I run the gears program in my personal laptop with Intel i5 and integrated intel HD graphics with ubuntu 19.04 OS, on average below the statistics:  
 
-| Resolution | Vertical sync ON FPS | Vertical sync OFF FPS |  
+| Resolution | Vertical Sync ON FPS | Vertical Sync OFF FPS |  
 |:------------:|:-----:|:-----:| 
 | 1 x 1      | 60   | 1500 |  
 | 300 x 300  | 60  | 1375 |  
