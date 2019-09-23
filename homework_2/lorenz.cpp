@@ -29,12 +29,20 @@ void lorenz_attractor::lorenz_attractor_math() {
 
 void lorenz_attractor::reshape_window(int width, int height) {
     GLfloat h = (GLfloat) height / (GLfloat) width;
+
     glViewport(0, 0, (GLint) width, (GLint) height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-box_dim*h,+box_dim*h, -box_dim,+box_dim, -box_dim,+box_dim);
+    glFrustum(-1.0, 1.0, -h, h, 5.0, 60.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+//    double h = width/height;
+//    glViewport(0, 0, (GLint) width, (GLint) height);
+//    glMatrixMode(GL_PROJECTION);
+//    glLoadIdentity();
+//    glOrtho(-box_dim*h,+box_dim*h, -box_dim,+box_dim, -box_dim,+box_dim);
+//    glMatrixMode(GL_MODELVIEW);
+//    glLoadIdentity();
 }
 
 void lorenz_attractor::arrow_keys_pressed(int key, int x, int y) {
