@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/shivababa/CLionProjects/opengl_assignments/homework_2/lorenz.cpp
+lorenz.h
+/home/shivababa/CLionProjects/opengl_assignments/homework_2/lorenz.h
+GL/glut.h
+-
+cstring
+-
+iostream
+-
+csignal
+-
+
+/home/shivababa/CLionProjects/opengl_assignments/homework_2/lorenz.h
+
+/home/shivababa/CLionProjects/opengl_assignments/homework_2/main.cpp
+GL/glut.h
+-
+lorenz.h
+/home/shivababa/CLionProjects/opengl_assignments/homework_2/lorenz.h
+iostream
+-
+

@@ -1,0 +1,3 @@
+/home/shivababa/CLionProjects/opengl_assignments/homework_2/CMakeFiles/rebuild_cache.dir
+/home/shivababa/CLionProjects/opengl_assignments/homework_2/CMakeFiles/lorenz.dir
+/home/shivababa/CLionProjects/opengl_assignments/homework_2/CMakeFiles/edit_cache.dir

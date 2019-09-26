@@ -16,7 +16,7 @@ int main(int argc, char *argv[]){
     std::cout << test2 << std::endl;
     glutInit(&argc,argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
-    glutInitWindowPosition(0, 0);H
+    glutInitWindowPosition(0, 0);
     glutInitWindowSize(500,500);
     glutCreateWindow("Krishna Chaitanya: Lorenz Attractor");
     glutDisplayFunc(lorenz_attractor::display_lorenz);

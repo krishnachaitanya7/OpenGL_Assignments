@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/lorenz.dir/main.cpp.o CMakeFiles/lorenz.dir/lorenz.cpp.o  -o lorenz -lglut -lGLU -lGL -lm 
