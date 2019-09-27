@@ -3,6 +3,7 @@ project(opengl_assignments)
 
 set(CMAKE_CXX_STANDARD 14)
 include_directories(homework_2)
+include_directories(homework_3)
 include(homework_0/CMakeLists.txt)
-include(homework_2/CMakeLists.txt)
+#include(homework_2/CMakeLists.txt)
 include(homework_3/CMakeLists.txt)
