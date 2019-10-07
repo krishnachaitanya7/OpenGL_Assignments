@@ -1,2 +1,2 @@
-add_executable(hw3 homework_3/main.cpp homework_3/util.cpp)
-target_link_libraries(hw3 glut GLU GL m)
+add_executable(hw4 homework_4/main.cpp homework_4/util.cpp)
+target_link_libraries(hw4 glut GLU GL m)
