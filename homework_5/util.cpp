@@ -4,6 +4,8 @@
 #define GL_GLEXT_PROTOTYPES
 #include <GL/glut.h>
 #include <CSCIx229.h>
+#include <math.h>
+#include <vector>
 
 
 void utils::cube(double x, double y, double z, double dx, double dy, double dz, double th) {
@@ -65,7 +67,6 @@ void utils::cube(double x, double y, double z, double dx, double dy, double dz, 
     glVertex3f(-1,-1,+1);
     //  End
     glEnd();
-    //  Undo transofrmations
     glPopMatrix();
 
 }
@@ -109,7 +110,6 @@ void utils::ball(double x, double y, double z, double r){
 
 
 void utils::display_scene(){
-
     const double len=2.0;  //  Length of axes
     //  Erase the window and the depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -145,12 +145,11 @@ void utils::display_scene(){
         float Specular[]  = {static_cast<float>(0.01*specular),static_cast<float>(0.01*specular),static_cast<float>(0.01*specular),1.0};
         //  Light position
         float Position[]  = {static_cast<float>(distance*Cos(zh)),ylight,static_cast<float>(distance*Sin(zh)),1.0};
-        float Position1[]  = {ylight, static_cast<float>(distance*Cos(zph)),static_cast<float>(distance*Sin(zph)),1.0};
 
         //  Draw light position as ball (still no lighting here)
         glColor3f(1,1,1);
         ball(Position[0],Position[1],Position[2] , 0.1);
-        ball(Position1[0],Position1[1],Position1[2] , 0.1);
+//        draw_light_path();
 
         //  OpenGL should normalize normal vectors
         glEnable(GL_NORMALIZE);
@@ -163,28 +162,21 @@ void utils::display_scene(){
         glEnable(GL_COLOR_MATERIAL);
         //  Enable light 0
         glEnable(GL_LIGHT0);
-
-        glEnable(GL_LIGHT1);
         //  Set ambient, diffuse, specular components and position of light 0
         glLightfv(GL_LIGHT0,GL_AMBIENT ,Ambient);
         glLightfv(GL_LIGHT0,GL_DIFFUSE ,Diffuse);
         glLightfv(GL_LIGHT0,GL_SPECULAR,Specular);
         glLightfv(GL_LIGHT0,GL_POSITION,Position);
-
-        glLightfv(GL_LIGHT1,GL_AMBIENT ,Ambient);
-        glLightfv(GL_LIGHT1,GL_DIFFUSE ,Diffuse);
-        glLightfv(GL_LIGHT1,GL_SPECULAR,Specular);
-        glLightfv(GL_LIGHT1,GL_POSITION,Position1);
     }
     else
         glDisable(GL_LIGHTING);
 
-    glColor3f(1,0,0);
-    ball(0, 0, 0, 0.4);
-    ball(0.3, 0, 0, 0.4);
-    glColor3f(0,0,1);
-    ball(0, 0.3, 0, 0.4);
-    ball(0, 0, 0.3, 0.4);
+    // Draw The scene
+    draw_house(0);
+    draw_house(1);
+
+
+    //
 
 
     //  Draw axes - no lighting from here on
@@ -209,7 +201,9 @@ void utils::display_scene(){
         Print("Z");
     }
 
-    //  Display parameters
+
+
+//      Display parameters
     glWindowPos2i(5,5);
     Print("Angle=%d,%d  Dim=%.1f FOV=%d Projection=%s Light=%s",
           th,ph,dim,fov,mode?"Perpective":"Orthogonal",light?"On":"Off");
@@ -229,11 +223,13 @@ void utils::display_scene(){
 }
 
 void utils::idle() {
-    //  Elapsed time in seconds
-    double t = glutGet(GLUT_ELAPSED_TIME)/1000.0;
-    zh = fmod(90*t,360.0);
-    zph = fmod(90*t,360.0);
-    //  Tell GLUT it is necessary to redisplay the scene
+    if(move){
+        //  Elapsed time in seconds
+        double t = glutGet(GLUT_ELAPSED_TIME)/1000.0;
+        zh = fmod(90*t,360.0);
+        zph = fmod(90*t,360.0);
+        //  Tell GLUT it is necessary to redisplay the scene
+    }
     glutPostRedisplay();
 }
 
@@ -290,6 +286,126 @@ void utils::special(int key,int x,int y)
     Project(mode?fov:0,asp,dim);
     //  Tell GLUT it is necessary to redisplay the scene
     glutPostRedisplay();
+}
+
+float utils::get_rand() {
+    float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+    return r;
+}
+
+void utils::draw_house(float translation) {
+    glColor3f (1,1,0);
+    glBegin(GL_TRIANGLES);
+    std::vector<float>  point_1 {static_cast<float>(0.8+translation), 0.6, 0.0};
+    std::vector<float> point_2 {static_cast<float>(0.8+translation), 0.6, 0.5};
+    std::vector<float> point_3 {static_cast<float>(0.8+translation), 0.8, 0.25};
+    float* normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
+    glNormal3f(normals_ptr[0], normals_ptr[1], normals_ptr[2]);
+    glVertex3f (point_1[0], point_1[1], point_1[2]);
+    glVertex3f (point_2[0], point_2[1], point_2[2]);
+    glVertex3f (point_3[0], point_3[1], point_3[2]);
+    glEnd();
+    delete normals_ptr;
+
+
+    glBegin(GL_TRIANGLES);
+    point_1 = {static_cast<float>(0.1+translation), 0.6, 0.0};
+    point_2 = {static_cast<float>(0.1+translation), 0.6, 0.5};
+    point_3 = {static_cast<float>(0.1+translation), 0.8, 0.25};
+    normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
+    glNormal3f(-normals_ptr[0], -normals_ptr[1], -normals_ptr[2]);
+    glVertex3f (point_1[0], point_1[1], point_1[2]);
+    glVertex3f (point_2[0], point_2[1], point_2[2]);
+    glVertex3f (point_3[0], point_3[1], point_3[2]);
+    delete normals_ptr;
+    glEnd();
+
+
+    glBegin(GL_POLYGON);
+    point_1 = {static_cast<float>(0.1+translation), 0.6, 0.0};
+    point_2 = {static_cast<float>(0.8+translation), 0.6, 0.0};
+    point_3 = {static_cast<float>(0.8+translation), 0.8, 0.25};
+    normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
+    glNormal3f(normals_ptr[0], normals_ptr[1], normals_ptr[2]);
+    glVertex3f (point_1[0], point_1[1], point_1[2]);
+    glVertex3f (point_2[0], point_2[1], point_2[2]);
+    glVertex3f (point_3[0], point_3[1], point_3[2]);
+    delete normals_ptr;
+    glVertex3f (0.1+translation, 0.8, 0.25);
+    glEnd();
+
+
+    glBegin(GL_POLYGON);
+    point_1 = {static_cast<float>(0.1+translation), 0.6, 0.5};
+    point_2 = {static_cast<float>(0.8+translation), 0.57, 0.5};
+    point_3 = {static_cast<float>(0.8+translation), 0.8, 0.25};
+    normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
+    glNormal3f(-normals_ptr[0], -normals_ptr[1], -normals_ptr[2]);
+    glVertex3f (point_1[0], point_1[1], point_1[2]);
+    glVertex3f (point_2[0], point_2[1], point_2[2]);
+    glVertex3f (point_3[0], point_3[1], point_3[2]);
+    delete normals_ptr;
+    glVertex3f (0.1+translation, 0.8, 0.25);
+    glEnd();
+
+
+    glColor3f (0,1,1);
+    glBegin(GL_POLYGON);
+    point_1 = {static_cast<float>(0.1+translation), 0.1, 0.0};
+    point_2 = {static_cast<float>(0.8+translation), 0.1, 0.0};
+    point_3 = {static_cast<float>(0.8+translation), 0.6, 0.0};
+    normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
+    glNormal3f(normals_ptr[0], normals_ptr[1], normals_ptr[2]);
+    glVertex3f (point_1[0], point_1[1], point_1[2]);
+    glVertex3f (point_2[0], point_2[1], point_2[2]);
+    glVertex3f (point_3[0], point_3[1], point_3[2]);
+    delete normals_ptr;
+    glVertex3f (0.1+translation, 0.6, 0.0);
+    glEnd();
+
+
+    glBegin(GL_POLYGON);
+    point_1 = {static_cast<float>(0.1+translation), 0.1, 0.5};
+    point_2 = {static_cast<float>(0.8+translation), 0.1, 0.5};
+    point_3 = {static_cast<float>(0.8+translation), 0.6, 0.5};
+    normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
+    glNormal3f(-normals_ptr[0], -normals_ptr[1], -normals_ptr[2]);
+    glVertex3f (point_1[0], point_1[1], point_1[2]);
+    glVertex3f (point_2[0], point_2[1], point_2[2]);
+    glVertex3f (point_3[0], point_3[1], point_3[2]);
+    delete normals_ptr;
+    glVertex3f (0.1+translation, 0.6, 0.5);
+    glEnd();
+
+
+
+    glBegin(GL_POLYGON);
+    point_1 = {static_cast<float>(0.1+translation), 0.1, 0.5};
+    point_2 = {static_cast<float>(0.1+translation), 0.1, 0.0};
+    point_3 = {static_cast<float>(0.1+translation), 0.6, 0.0};
+    normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
+    glNormal3f(normals_ptr[0], normals_ptr[1], normals_ptr[2]);
+    glVertex3f (point_1[0], point_1[1], point_1[2]);
+    glVertex3f (point_2[0], point_2[1], point_2[2]);
+    glVertex3f (point_3[0], point_3[1], point_3[2]);
+    delete normals_ptr;
+    glVertex3f (0.1+translation, 0.6, 0.5);
+    glEnd();
+
+
+
+    glBegin(GL_POLYGON);
+    point_1 = {static_cast<float>(0.8+translation), 0.1, 0.5};
+    point_2 = {static_cast<float>(0.8+translation), 0.1, 0.0};
+    point_3 = {static_cast<float>(0.8+translation), 0.6, 0.0};
+    normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
+    glNormal3f(-normals_ptr[0], -normals_ptr[1], -normals_ptr[2]);
+    glVertex3f (point_1[0], point_1[1], point_1[2]);
+    glVertex3f (point_2[0], point_2[1], point_2[2]);
+    glVertex3f (point_3[0], point_3[1], point_3[2]);
+    delete normals_ptr;
+    glVertex3f (0.8+translation, 0.6, 0.5);
+    glEnd();
 }
 
 /*
@@ -360,9 +476,40 @@ void utils::key(unsigned char ch,int x,int y)
     //  Reproject
     Project(mode?fov:0,asp,dim);
     //  Animate if requested
-    glutIdleFunc(move?idle:NULL);
+//    glutIdleFunc(move?idle:NULL);
     //  Tell GLUT it is necessary to redisplay the scene
     glutPostRedisplay();
+}
+
+void utils::draw_light_path() {
+    int zh=0, zph=0, i;
+    glBegin(GL_POINTS);
+    for(i=0; i<361; i++){
+        float Position[]  = {static_cast<float>(distance*Cos(zh)),ylight,static_cast<float>(distance*Sin(zh)),1.0};
+        float Position1[]  = {ylight, static_cast<float>(distance*Cos(zph)),static_cast<float>(distance*Sin(zph)),1.0};
+        glVertex3d(Position[0], Position[1], Position[2]);
+        glVertex3d(Position1[0], Position1[1], Position1[2]);
+        zh++;
+        zph++;
+    }
+    glEnd();
+}
+
+float *utils::get_me_normals(float *pt1, float *pt2, float *pt3) {
+    float X[] = {pt2[0]-pt1[0], pt2[1]-pt1[1], pt2[2]-pt1[2]};
+    float Y[] = {pt3[0]-pt1[0], pt3[1]-pt1[1], pt3[2]-pt1[2]};
+    float *result;
+    result=new float[3];
+    result[0] = (X[1] * Y[2] - X[2] * Y[1]);
+    result[1] = - (X[0] * Y[2] - X[2] * Y[0]);
+    result[2] = (X[0] * Y[1] - X[1] * Y[0]);
+
+    float mod_result =  sqrt(result[0]*result[0] + result[1]*result[1] + result[2]*result[2]);
+    result[0] = -result[0]/mod_result;
+    result[1] = -result[1]/mod_result;
+    result[2] = -result[2]/mod_result;
+    return result;
+
 }
 
 

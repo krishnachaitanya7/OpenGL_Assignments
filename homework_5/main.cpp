@@ -29,6 +29,7 @@ float utils::shiny   =   1;  // Shininess (value)
 int utils::zh        =  90;  // Light azimuth
 int utils::zph        =  0;  // Light azimuth
 float utils::ylight  =   0;
+double utils::elapsed_time = 0;
 
 
 int main(int argc, char** argv) {
@@ -36,12 +37,14 @@ int main(int argc, char** argv) {
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize(500, 500);
     glutCreateWindow("Kodur Krishna Chaitanya: HW5");
-
+    glPointSize(1);
     glutDisplayFunc(utils::display_scene);
     glutReshapeFunc(utils::reshape_window);
+
     glutSpecialFunc(utils::special);
     glutKeyboardFunc(utils::key);
     glutIdleFunc(utils::idle);
+
     glutMainLoop();
     return 0;
 }

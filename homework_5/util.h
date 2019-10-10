@@ -29,6 +29,7 @@ public:
     static int zh;  // Light azimuth
     static int zph;  // Light azimuth
     static float ylight;  // Elevation of light
+    static double elapsed_time;
 
     static void display_scene();
     static void reshape_window(int w, int h);
@@ -38,7 +39,11 @@ public:
     static void Vertex(double th,double ph);
     static void ball(double x,double y,double z,double r);
     static void idle();
+    static void draw_light_path();
     static void key(unsigned char ch,int x,int y);
     static void special(int key,int x,int y);
+    static float* get_me_normals(float* pt1, float* pt2, float *pt3);
+    static void draw_house(float translation);
+    static float get_rand();
 };
 #endif //OPENGL_ASSIGNMENTS_LORENZ_H
