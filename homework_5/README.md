@@ -9,8 +9,12 @@ Directions to use:
 "+" : To zoom in  
 "-" : To zoom out  
 Arrow keys: To rotate the scene  
+"m" : To pause the movement of light source   
 "}" : Move light source Up  
 "{" : Move light source down  
+
+Thank you!
+
 
 
  
