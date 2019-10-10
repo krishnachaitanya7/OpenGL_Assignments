@@ -5,38 +5,36 @@
 
 // Initializing Variables
 
-int utils::axes=0;       //  Display axes
-int utils::mode=1;       //  Projection mode
-int utils::move=1;       //  Move light
-int utils::th=40;         //  Azimuth of view angle
-int utils::ph=0;         //  Elevation of view angle
-int utils::fov=27;       //  Field of view (for perspective)
-int utils::light=1;      //  Lighting
-double utils::asp=1;     //  Aspect ratio
-double utils::dim=3.0;   //  Size of world
+int utils::axes=0;
+int utils::mode=1;
+int utils::move=1;
+int utils::th=50;
+int utils::ph=0;
+int utils::fov=27;
+int utils::light=1;
+double utils::asp=1;
+double utils::dim=3.0;
 // Light values
-int utils::one       =   1;  // Unit value
-int utils::distance  =   2;  // Light distance
-int utils::inc       =  10;  // Ball increment
-int utils::smooth    =   1;  // Smooth/Flat shading
-int utils::local     =   0;  // Local Viewer Model
-int utils::emission  =   0;  // Emission intensity (%)
-int utils::ambient   =  30;  // Ambient intensity (%)
-int utils::diffuse   = 100;  // Diffuse intensity (%)
-int utils::specular  =   0;  // Specular intensity (%)
-int utils::shininess =   0;  // Shininess (power of two)
-float utils::shiny   =   1;  // Shininess (value)
-int utils::zh        =  90;  // Light azimuth
-int utils::zph        =  0;  // Light azimuth
+int utils::one       =   1;
+int utils::distance  =   2;
+int utils::inc       =  10;
+int utils::smooth    =   1;
+int utils::local     =   0;
+int utils::emission  =   0;
+int utils::ambient   =  30;
+int utils::diffuse   = 100;
+int utils::specular  =   0;
+int utils::shininess =   0;
+float utils::shiny   =   1;
+int utils::zh        =  90;
+int utils::zph        =  0;
 float utils::ylight  =   0;
-
-
 
 
 int main(int argc, char** argv) {
     glutInit( & argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    glutInitWindowSize(500, 500);
+    glutInitWindowSize(1000, 1000);
     glutCreateWindow("Kodur Krishna Chaitanya: HW5");
     glPointSize(1);
     glutDisplayFunc(utils::display_scene);

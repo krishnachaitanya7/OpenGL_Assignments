@@ -64,6 +64,7 @@ void utils::display_scene(){
         double Ey = +2*dim        *Sin(ph);
         double Ez = +2*dim*Cos(th)*Cos(ph);
         gluLookAt(Ex,Ey,Ez , 0,0,0 , 0,Cos(ph),0);
+
     }
         //  Orthogonal - set world orientation
     else
@@ -447,7 +448,6 @@ float *utils::get_me_normals(float *pt1, float *pt2, float *pt3) {
     result[0] = (X[1] * Y[2] - X[2] * Y[1]);
     result[1] = - (X[0] * Y[2] - X[2] * Y[0]);
     result[2] = (X[0] * Y[1] - X[1] * Y[0]);
-
     float mod_result =  sqrt(result[0]*result[0] + result[1]*result[1] + result[2]*result[2]);
     result[0] = -result[0]/mod_result;
     result[1] = -result[1]/mod_result;
