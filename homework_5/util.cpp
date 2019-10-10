@@ -382,9 +382,9 @@ void utils::key(unsigned char ch,int x,int y)
         zh -= 1;
         //  Change field of view angle
     else if (ch == '-' && ch>1)
-        fov--;
-    else if (ch == '+' && ch<179)
         fov++;
+    else if (ch == '+' && ch<179)
+        fov--;
         //  Light elevation
     else if (ch=='[')
         ylight -= 0.1;
