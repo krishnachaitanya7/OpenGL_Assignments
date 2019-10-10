@@ -1,2 +1,3 @@
-add_executable(hw5 homework_5/main.cpp homework_5/util.cpp)
+ADD_LIBRARY(CSCIx229 project.c print.c object.c loadtexbmp.c errcheck.c CSCIx229.h)
+add_executable(hw5 main.cpp util.cpp)
 target_link_libraries(hw5 glut GLU GL m CSCIx229)

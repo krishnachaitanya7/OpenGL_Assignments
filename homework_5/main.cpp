@@ -5,12 +5,12 @@
 
 // Initializing Variables
 
-int utils::axes=1;       //  Display axes
+int utils::axes=0;       //  Display axes
 int utils::mode=1;       //  Projection mode
 int utils::move=1;       //  Move light
-int utils::th=0;         //  Azimuth of view angle
+int utils::th=40;         //  Azimuth of view angle
 int utils::ph=0;         //  Elevation of view angle
-int utils::fov=55;       //  Field of view (for perspective)
+int utils::fov=27;       //  Field of view (for perspective)
 int utils::light=1;      //  Lighting
 double utils::asp=1;     //  Aspect ratio
 double utils::dim=3.0;   //  Size of world
@@ -29,7 +29,8 @@ float utils::shiny   =   1;  // Shininess (value)
 int utils::zh        =  90;  // Light azimuth
 int utils::zph        =  0;  // Light azimuth
 float utils::ylight  =   0;
-double utils::elapsed_time = 0;
+
+
 
 
 int main(int argc, char** argv) {
@@ -40,11 +41,9 @@ int main(int argc, char** argv) {
     glPointSize(1);
     glutDisplayFunc(utils::display_scene);
     glutReshapeFunc(utils::reshape_window);
-
     glutSpecialFunc(utils::special);
     glutKeyboardFunc(utils::key);
     glutIdleFunc(utils::idle);
-
     glutMainLoop();
     return 0;
 }

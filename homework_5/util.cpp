@@ -1,75 +1,14 @@
-#include <util.h>
+/*
+ * Reference: ex13 from Moodle
+ * */
 #include <iostream>
 #include "util.h"
 #define GL_GLEXT_PROTOTYPES
 #include <GL/glut.h>
-#include <CSCIx229.h>
+#include "CSCIx229.h"
 #include <math.h>
 #include <vector>
 
-
-void utils::cube(double x, double y, double z, double dx, double dy, double dz, double th) {
-    //  Set specular color to white
-    float white[] = {1,1,1,1};
-    float black[] = {0,0,0,1};
-    glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
-    glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,white);
-    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,black);
-    //  Save transformation
-    glPushMatrix();
-    //  Offset, scale and rotate
-    glTranslated(x,y,z);
-    glRotated(th,0,1,0);
-    glScaled(dx,dy,dz);
-    //  Cube
-    glBegin(GL_QUADS);
-    //  Front
-    glColor3f(1,0,0);
-    glNormal3f( 0, 0, 1);
-    glVertex3f(-1,-1, 1);
-    glVertex3f(+1,-1, 1);
-    glVertex3f(+1,+1, 1);
-    glVertex3f(-1,+1, 1);
-    //  Back
-    glColor3f(0,0,1);
-    glNormal3f( 0, 0,-1);
-    glVertex3f(+1,-1,-1);
-    glVertex3f(-1,-1,-1);
-    glVertex3f(-1,+1,-1);
-    glVertex3f(+1,+1,-1);
-    //  Right
-    glColor3f(1,1,0);
-    glNormal3f(+1, 0, 0);
-    glVertex3f(+1,-1,+1);
-    glVertex3f(+1,-1,-1);
-    glVertex3f(+1,+1,-1);
-    glVertex3f(+1,+1,+1);
-    //  Left
-    glColor3f(0,1,0);
-    glNormal3f(-1, 0, 0);
-    glVertex3f(-1,-1,-1);
-    glVertex3f(-1,-1,+1);
-    glVertex3f(-1,+1,+1);
-    glVertex3f(-1,+1,-1);
-    //  Top
-    glColor3f(0,1,1);
-    glNormal3f( 0,+1, 0);
-    glVertex3f(-1,+1,+1);
-    glVertex3f(+1,+1,+1);
-    glVertex3f(+1,+1,-1);
-    glVertex3f(-1,+1,-1);
-    //  Bottom
-    glColor3f(1,0,1);
-    glNormal3f( 0,-one, 0);
-    glVertex3f(-1,-1,-1);
-    glVertex3f(+1,-1,-1);
-    glVertex3f(+1,-1,+1);
-    glVertex3f(-1,-1,+1);
-    //  End
-    glEnd();
-    glPopMatrix();
-
-}
 
 void utils::Vertex(double th, double ph) {
     double x = Sin(th)*Cos(ph);
@@ -170,15 +109,8 @@ void utils::display_scene(){
     }
     else
         glDisable(GL_LIGHTING);
-
-    // Draw The scene
     draw_house(0);
     draw_house(1);
-
-
-    //
-
-
     //  Draw axes - no lighting from here on
     glDisable(GL_LIGHTING);
     glColor3f(1,1,1);
@@ -200,20 +132,9 @@ void utils::display_scene(){
         glRasterPos3d(0.0,0.0,len);
         Print("Z");
     }
-
-
-
-//      Display parameters
     glWindowPos2i(5,5);
-    Print("Angle=%d,%d  Dim=%.1f FOV=%d Projection=%s Light=%s",
-          th,ph,dim,fov,mode?"Perpective":"Orthogonal",light?"On":"Off");
-    if (light)
-    {
-        glWindowPos2i(5,45);
-        Print("Model=%s LocalViewer=%s Distance=%d Elevation=%.1f",smooth?"Smooth":"Flat",local?"On":"Off",distance,ylight);
-        glWindowPos2i(5,25);
-        Print("Ambient=%d  Diffuse=%d Specular=%d Emission=%d Shininess=%.0f",ambient,diffuse,specular,emission,shiny);
-    }
+    Print("Angle=%d,%d  FOV=%d",
+          th,ph,fov);
 
     //  Render the scene and make it visible
     ErrCheck("display");
@@ -222,10 +143,34 @@ void utils::display_scene(){
 
 }
 
+void utils::draw_cone() {
+//    glTranslatef(0.0, -6.0, -20.0);
+    glBegin(GL_TRIANGLES);
+    float v[] = {0.0, 10.0, 0.0};
+    float theta = 0;
+    float c_f = 3.14/180;
+    float v0[] = {cos(theta*c_f)*4, 0.0, sin(theta*c_f)*4};
+    float v1[] = {0.0, 0.0, 0.0};
+    for(theta=10; theta<=360; theta+=10){
+        v1[0] = cos(theta*c_f)*4;
+        v1[2] = sin(theta*c_f)*4;
+        float* normal_ptr = get_me_normals(v0, v1, v);
+        glNormal3f(normal_ptr[0], normal_ptr[1], normal_ptr[2]);
+        glVertex3f(v[0], v[1], v[2]);
+        glVertex3f(v0[0], v0[1], v0[2]);
+        glVertex3fv(v1);
+        v0[0] = v1[0];
+        v0[2] = v1[2];
+        delete normal_ptr;
+    }
+}
+
+
 void utils::idle() {
     if(move){
-        //  Elapsed time in seconds
-        double t = glutGet(GLUT_ELAPSED_TIME)/1000.0;
+        double t;
+        t = glutGet(GLUT_ELAPSED_TIME)/1000.0;
+
         zh = fmod(90*t,360.0);
         zph = fmod(90*t,360.0);
         //  Tell GLUT it is necessary to redisplay the scene
@@ -288,10 +233,6 @@ void utils::special(int key,int x,int y)
     glutPostRedisplay();
 }
 
-float utils::get_rand() {
-    float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-    return r;
-}
 
 void utils::draw_house(float translation) {
     glColor3f (1,1,0);
@@ -337,7 +278,7 @@ void utils::draw_house(float translation) {
 
     glBegin(GL_POLYGON);
     point_1 = {static_cast<float>(0.1+translation), 0.6, 0.5};
-    point_2 = {static_cast<float>(0.8+translation), 0.57, 0.5};
+    point_2 = {static_cast<float>(0.8+translation), 0.6, 0.5};
     point_3 = {static_cast<float>(0.8+translation), 0.8, 0.25};
     normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
     glNormal3f(-normals_ptr[0], -normals_ptr[1], -normals_ptr[2]);
@@ -413,6 +354,9 @@ void utils::draw_house(float translation) {
  */
 void utils::key(unsigned char ch,int x,int y)
 {
+    /*
+     * Preserved from ex13, for ease of correction
+     * */
     //  Exit on ESC
     if (ch == 27)
         exit(0);
@@ -476,7 +420,7 @@ void utils::key(unsigned char ch,int x,int y)
     //  Reproject
     Project(mode?fov:0,asp,dim);
     //  Animate if requested
-//    glutIdleFunc(move?idle:NULL);
+    glutIdleFunc(move?idle:NULL);
     //  Tell GLUT it is necessary to redisplay the scene
     glutPostRedisplay();
 }
