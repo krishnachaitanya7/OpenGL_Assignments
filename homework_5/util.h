@@ -6,29 +6,29 @@ public:
     /*
      * Reference: ex13 from Moodle
      * */
-    static int axes;       //  Display axes
-    static int mode;       //  Projection mode
-    static int move;       //  Move light
-    static int th;         //  Azimuth of view angle
-    static int ph;         //  Elevation of view angle
-    static int fov;       //  Field of view (for perspective)
-    static int light;      //  Lighting
-    static double asp;     //  Aspect ratio
-    static double dim;   //  Size of world
-    static int one;  // Unit value
-    static int distance;  // Light distance
-    static int inc ;  // Ball increment
-    static int smooth;  // Smooth/Flat shading
-    static int local ;  // Local Viewer Model
-    static int emission ;  // Emission intensity (%)
-    static int ambient ;  // Ambient intensity (%)
-    static int diffuse ;  // Diffuse intensity (%)
-    static int specular;  // Specular intensity (%)
-    static int shininess;  // Shininess (power of two)
-    static float shiny;  // Shininess (value)
-    static int zh;  // Light azimuth
-    static int zph;  // Light azimuth
-    static float ylight;  // Elevation of light
+    static int axes;
+    static int mode;
+    static int move;
+    static int th;
+    static int ph;
+    static int fov;
+    static int light;
+    static double asp;
+    static double dim;
+    static int one;
+    static int distance;
+    static int inc ;
+    static int smooth;
+    static int local ;
+    static int emission ;
+    static int ambient ;
+    static int diffuse ;
+    static int specular;
+    static int shininess;
+    static float shiny;
+    static int zh;
+    static int zph;
+    static float ylight;
 
     static void display_scene();
     static void reshape_window(int w, int h);
