@@ -13,7 +13,7 @@ Arrow keys: To rotate the scene
 "}" : Move light source Up  
 "{" : Move light source down  
 
-Thank you!
+Thank you for your time!
 
 
 
