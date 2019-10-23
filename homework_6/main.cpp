@@ -1,6 +1,7 @@
 #define GL_GLEXT_PROTOTYPES
 #include <GL/glut.h>
 #include "util.h"
+#include "CSCIx229.h"
 
 
 // Initializing Variables
@@ -27,8 +28,9 @@ int utils::specular  =   0;
 int utils::shininess =   0;
 float utils::shiny   =   1;
 int utils::zh        =  90;
-int utils::zph        =  0;
+int utils::zph       =  0;
 float utils::ylight  =   0;
+unsigned int utils::texture = LoadTexBMP("crate.bmp");
 
 
 int main(int argc, char** argv) {
@@ -42,6 +44,7 @@ int main(int argc, char** argv) {
     glutSpecialFunc(utils::special);
     glutKeyboardFunc(utils::key);
     glutIdleFunc(utils::idle);
+    ErrCheck("init");
     glutMainLoop();
     return 0;
 }

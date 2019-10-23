@@ -32,7 +32,7 @@ unsigned int LoadTexBMP(const char* file)
    unsigned int   off;        // Image offset
    unsigned int   k;          // Counter
    int            max;        // Maximum texture dimensions
-
+    max=16384;
    //  Open file
    f = fopen(file,"rb");
    if (!f) Fatal("Cannot open file %s\n",file);

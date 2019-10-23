@@ -28,6 +28,7 @@ public:
     static float shiny;
     static int zh;
     static int zph;
+    static unsigned int texture;
     static float ylight;
 
     static void display_scene();

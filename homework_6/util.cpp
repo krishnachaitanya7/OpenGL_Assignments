@@ -107,6 +107,12 @@ void utils::display_scene(){
         glLightfv(GL_LIGHT0,GL_DIFFUSE ,Diffuse);
         glLightfv(GL_LIGHT0,GL_SPECULAR,Specular);
         glLightfv(GL_LIGHT0,GL_POSITION,Position);
+
+        // Texture Bro
+        glEnable(GL_TEXTURE_2D);
+        glTexEnvi(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,mode?GL_REPLACE:GL_MODULATE);
+        glColor3f(1,1,1);
+        glBindTexture(GL_TEXTURE_2D,texture);
     }
     else
         glDisable(GL_LIGHTING);
@@ -139,6 +145,8 @@ void utils::display_scene(){
 
     //  Render the scene and make it visible
     ErrCheck("display");
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
     glFlush();
     glutSwapBuffers();
 
@@ -238,6 +246,7 @@ void utils::special(int key,int x,int y)
 void utils::draw_house(float translation) {
     glColor3f (1,1,0);
     glBegin(GL_TRIANGLES);
+
     std::vector<float>  point_1 {static_cast<float>(0.8+translation), 0.6, 0.0};
     std::vector<float> point_2 {static_cast<float>(0.8+translation), 0.6, 0.5};
     std::vector<float> point_3 {static_cast<float>(0.8+translation), 0.8, 0.25};
@@ -261,8 +270,6 @@ void utils::draw_house(float translation) {
     glVertex3f (point_3[0], point_3[1], point_3[2]);
     delete normals_ptr;
     glEnd();
-
-
     glBegin(GL_POLYGON);
     point_1 = {static_cast<float>(0.1+translation), 0.6, 0.0};
     point_2 = {static_cast<float>(0.8+translation), 0.6, 0.0};
