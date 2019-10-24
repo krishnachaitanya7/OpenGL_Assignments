@@ -28,8 +28,9 @@ public:
     static float shiny;
     static int zh;
     static int zph;
-    static unsigned int texture;
+    static int ntex;
     static float ylight;
+    static unsigned textures[2];
 
     static void display_scene();
     static void reshape_window(int w, int h);

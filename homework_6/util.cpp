@@ -107,12 +107,6 @@ void utils::display_scene(){
         glLightfv(GL_LIGHT0,GL_DIFFUSE ,Diffuse);
         glLightfv(GL_LIGHT0,GL_SPECULAR,Specular);
         glLightfv(GL_LIGHT0,GL_POSITION,Position);
-
-        // Texture Bro
-        glEnable(GL_TEXTURE_2D);
-        glTexEnvi(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,mode?GL_REPLACE:GL_MODULATE);
-        glColor3f(1,1,1);
-        glBindTexture(GL_TEXTURE_2D,texture);
     }
     else
         glDisable(GL_LIGHTING);
@@ -145,8 +139,6 @@ void utils::display_scene(){
 
     //  Render the scene and make it visible
     ErrCheck("display");
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
     glFlush();
     glutSwapBuffers();
 
@@ -244,17 +236,30 @@ void utils::special(int key,int x,int y)
 
 
 void utils::draw_house(float translation) {
-    glColor3f (1,1,0);
-    glBegin(GL_TRIANGLES);
+    if(ntex){
+        float white[] = {1,1,1,1};
+        float Emission[]  = {0.0,0.0,static_cast<float>(0.01*emission),1.0};
+        glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+        glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,white);
+        glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,Emission);
+        glPushMatrix();
+        glEnable(GL_TEXTURE_2D);
+        glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE);
+        glColor3f(1,1,1);
+        glBindTexture(GL_TEXTURE_2D,textures[0]);
+    } else{
+        glColor3f (1,1,0);
+    }
 
+    glBegin(GL_TRIANGLES);
     std::vector<float>  point_1 {static_cast<float>(0.8+translation), 0.6, 0.0};
     std::vector<float> point_2 {static_cast<float>(0.8+translation), 0.6, 0.5};
     std::vector<float> point_3 {static_cast<float>(0.8+translation), 0.8, 0.25};
     float* normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
     glNormal3f(normals_ptr[0], normals_ptr[1], normals_ptr[2]);
-    glVertex3f (point_1[0], point_1[1], point_1[2]);
-    glVertex3f (point_2[0], point_2[1], point_2[2]);
-    glVertex3f (point_3[0], point_3[1], point_3[2]);
+    glTexCoord2f(0,0); glVertex3f (point_1[0], point_1[1], point_1[2]);
+    glTexCoord2f(1,0); glVertex3f (point_2[0], point_2[1], point_2[2]);
+    glTexCoord2f(0,1); glVertex3f (point_3[0], point_3[1], point_3[2]);
     glEnd();
     delete normals_ptr;
 
@@ -265,20 +270,22 @@ void utils::draw_house(float translation) {
     point_3 = {static_cast<float>(0.1+translation), 0.8, 0.25};
     normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
     glNormal3f(-normals_ptr[0], -normals_ptr[1], -normals_ptr[2]);
-    glVertex3f (point_1[0], point_1[1], point_1[2]);
-    glVertex3f (point_2[0], point_2[1], point_2[2]);
-    glVertex3f (point_3[0], point_3[1], point_3[2]);
+    glTexCoord2f(0,0); glVertex3f (point_1[0], point_1[1], point_1[2]);
+    glTexCoord2f(1,0); glVertex3f (point_2[0], point_2[1], point_2[2]);
+    glTexCoord2f(0,1); glVertex3f (point_3[0], point_3[1], point_3[2]);
     delete normals_ptr;
     glEnd();
+
+
     glBegin(GL_POLYGON);
     point_1 = {static_cast<float>(0.1+translation), 0.6, 0.0};
     point_2 = {static_cast<float>(0.8+translation), 0.6, 0.0};
     point_3 = {static_cast<float>(0.8+translation), 0.8, 0.25};
     normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
-    glNormal3f(normals_ptr[0], normals_ptr[1], normals_ptr[2]);
-    glVertex3f (point_1[0], point_1[1], point_1[2]);
-    glVertex3f (point_2[0], point_2[1], point_2[2]);
-    glVertex3f (point_3[0], point_3[1], point_3[2]);
+    glTexCoord2f(0,0); glNormal3f(normals_ptr[0], normals_ptr[1], normals_ptr[2]);
+    glTexCoord2f(1,0); glVertex3f (point_1[0], point_1[1], point_1[2]);
+    glTexCoord2f(1,1); glVertex3f (point_2[0], point_2[1], point_2[2]);
+    glTexCoord2f(0,1); glVertex3f (point_3[0], point_3[1], point_3[2]);
     delete normals_ptr;
     glVertex3f (0.1+translation, 0.8, 0.25);
     glEnd();
@@ -289,27 +296,26 @@ void utils::draw_house(float translation) {
     point_2 = {static_cast<float>(0.8+translation), 0.6, 0.5};
     point_3 = {static_cast<float>(0.8+translation), 0.8, 0.25};
     normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
-    glNormal3f(-normals_ptr[0], -normals_ptr[1], -normals_ptr[2]);
-    glVertex3f (point_1[0], point_1[1], point_1[2]);
-    glVertex3f (point_2[0], point_2[1], point_2[2]);
-    glVertex3f (point_3[0], point_3[1], point_3[2]);
+    glTexCoord2f(0,0); glNormal3f(-normals_ptr[0], -normals_ptr[1], -normals_ptr[2]);
+    glTexCoord2f(1,0); glVertex3f (point_1[0], point_1[1], point_1[2]);
+    glTexCoord2f(1,1); glVertex3f (point_2[0], point_2[1], point_2[2]);
+    glTexCoord2f(0,1); glVertex3f (point_3[0], point_3[1], point_3[2]);
     delete normals_ptr;
     glVertex3f (0.1+translation, 0.8, 0.25);
     glEnd();
 
-
-    glColor3f (0,1,1);
+    ntex ? glBindTexture(GL_TEXTURE_2D,textures[1]) : glColor3f (0,1,1);
     glBegin(GL_POLYGON);
     point_1 = {static_cast<float>(0.1+translation), 0.1, 0.0};
     point_2 = {static_cast<float>(0.8+translation), 0.1, 0.0};
     point_3 = {static_cast<float>(0.8+translation), 0.6, 0.0};
     normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
     glNormal3f(normals_ptr[0], normals_ptr[1], normals_ptr[2]);
-    glVertex3f (point_1[0], point_1[1], point_1[2]);
-    glVertex3f (point_2[0], point_2[1], point_2[2]);
-    glVertex3f (point_3[0], point_3[1], point_3[2]);
+    glTexCoord2f(0,0); glVertex3f (point_1[0], point_1[1], point_1[2]);
+    glTexCoord2f(1,0); glVertex3f (point_2[0], point_2[1], point_2[2]);
+    glTexCoord2f(1,1); glVertex3f (point_3[0], point_3[1], point_3[2]);
     delete normals_ptr;
-    glVertex3f (0.1+translation, 0.6, 0.0);
+    glTexCoord2f(0,1); glVertex3f (0.1+translation, 0.6, 0.0);
     glEnd();
 
 
@@ -319,11 +325,11 @@ void utils::draw_house(float translation) {
     point_3 = {static_cast<float>(0.8+translation), 0.6, 0.5};
     normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
     glNormal3f(-normals_ptr[0], -normals_ptr[1], -normals_ptr[2]);
-    glVertex3f (point_1[0], point_1[1], point_1[2]);
-    glVertex3f (point_2[0], point_2[1], point_2[2]);
-    glVertex3f (point_3[0], point_3[1], point_3[2]);
+    glTexCoord2f(0,0); glVertex3f (point_1[0], point_1[1], point_1[2]);
+    glTexCoord2f(1,0); glVertex3f (point_2[0], point_2[1], point_2[2]);
+    glTexCoord2f(1,1); glVertex3f (point_3[0], point_3[1], point_3[2]);
     delete normals_ptr;
-    glVertex3f (0.1+translation, 0.6, 0.5);
+    glTexCoord2f(0,1); glVertex3f (0.1+translation, 0.6, 0.5);
     glEnd();
 
 
@@ -334,11 +340,11 @@ void utils::draw_house(float translation) {
     point_3 = {static_cast<float>(0.1+translation), 0.6, 0.0};
     normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
     glNormal3f(normals_ptr[0], normals_ptr[1], normals_ptr[2]);
-    glVertex3f (point_1[0], point_1[1], point_1[2]);
-    glVertex3f (point_2[0], point_2[1], point_2[2]);
-    glVertex3f (point_3[0], point_3[1], point_3[2]);
+    glTexCoord2f(0,0); glVertex3f (point_1[0], point_1[1], point_1[2]);
+    glTexCoord2f(1,0); glVertex3f (point_2[0], point_2[1], point_2[2]);
+    glTexCoord2f(1,1); glVertex3f (point_3[0], point_3[1], point_3[2]);
     delete normals_ptr;
-    glVertex3f (0.1+translation, 0.6, 0.5);
+    glTexCoord2f(0,1); glVertex3f (0.1+translation, 0.6, 0.5);
     glEnd();
 
 
@@ -349,12 +355,18 @@ void utils::draw_house(float translation) {
     point_3 = {static_cast<float>(0.8+translation), 0.6, 0.0};
     normals_ptr = get_me_normals(point_1.data(), point_2.data(), point_3.data());
     glNormal3f(-normals_ptr[0], -normals_ptr[1], -normals_ptr[2]);
-    glVertex3f (point_1[0], point_1[1], point_1[2]);
-    glVertex3f (point_2[0], point_2[1], point_2[2]);
-    glVertex3f (point_3[0], point_3[1], point_3[2]);
+    glTexCoord2f(0,0); glVertex3f (point_1[0], point_1[1], point_1[2]);
+    glTexCoord2f(1,0); glVertex3f (point_2[0], point_2[1], point_2[2]);
+    glTexCoord2f(1,1); glVertex3f (point_3[0], point_3[1], point_3[2]);
     delete normals_ptr;
-    glVertex3f (0.8+translation, 0.6, 0.5);
+    glTexCoord2f(0,1); glVertex3f (0.8+translation, 0.6, 0.5);
     glEnd();
+
+    if(ntex){
+        glPopMatrix();
+        glDisable(GL_TEXTURE_2D);
+    }
+
 }
 
 /*
@@ -384,6 +396,8 @@ void utils::key(unsigned char ch,int x,int y)
     else if (ch == 'm' || ch == 'M')
         move = 1-move;
         //  Move light
+    else if (ch == 't')
+        ntex = 1-ntex;
     else if (ch == '<')
         zh += 1;
     else if (ch == '>')
