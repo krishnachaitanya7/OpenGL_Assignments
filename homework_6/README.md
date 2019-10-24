@@ -12,6 +12,7 @@ Arrow keys: To rotate the scene
 "m" : To pause the movement of light source   
 "}" : Move light source Up  
 "{" : Move light source down  
+"t": To toggle between texture and non-texture scene
 
 Thank you for your time!
 

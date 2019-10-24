@@ -15,7 +15,7 @@ int utils::fov=27;
 int utils::light=1;
 double utils::asp=1;
 double utils::dim=3.0;
-int utils::ntex = 0;
+int utils::ntex = 1;
 // Light values
 int utils::one       =   1;
 int utils::distance  =   2;
