@@ -1,4 +1,4 @@
 #!/bin/bash
 cmake .
 make
-./hw5
+./hw6

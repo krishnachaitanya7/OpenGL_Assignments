@@ -263,7 +263,6 @@ void utils::draw_house(float translation) {
     glEnd();
     delete normals_ptr;
 
-
     glBegin(GL_TRIANGLES);
     point_1 = {static_cast<float>(0.1+translation), 0.6, 0.0};
     point_2 = {static_cast<float>(0.1+translation), 0.6, 0.5};
