@@ -2,10 +2,10 @@
  * Reference: ex13 from Moodle
  * */
 #include <iostream>
-#include "util.h"
+#include "../include/util.h"
 #define GL_GLEXT_PROTOTYPES
 #include <GL/glut.h>
-#include "CSCIx229.h"
+#include "../include/CSCIx229.h"
 #include <math.h>
 #include <vector>
 

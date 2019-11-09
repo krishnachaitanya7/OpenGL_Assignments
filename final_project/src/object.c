@@ -1,4 +1,4 @@
-#include "CSCIx229.h"
+#include "../include/CSCIx229.h"
 #include <ctype.h>
 
 //  Load an OBJ file

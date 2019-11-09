@@ -1,8 +1,13 @@
 #define GL_GLEXT_PROTOTYPES
 #include <GL/glut.h>
-#include "util.h"
-#include "CSCIx229.h"
+#include "include/util.h"
+#include "include/CSCIx229.h"
 
+/*
+ * Some Good Resources
+ * https://blogs.igalia.com/itoral/2016/10/13/opengl-terrain-renderer-rendering-the-terrain-mesh/
+ * https://www.3dgep.com/multi-textured-terrain-in-opengl/
+ * */
 
 int utils::axes=1;       //  Display axes
 int utils::mode=0;       //  Shader mode

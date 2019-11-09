@@ -1,7 +1,7 @@
 /*
  *  Load texture from BMP file
  */
-#include "CSCIx229.h"
+#include "../include/CSCIx229.h"
 
 /*
  *  Reverse n bytes
