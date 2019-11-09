@@ -4,50 +4,43 @@
 #include "CSCIx229.h"
 
 
-// Initializing Variables
-
-int utils::axes=0;
-int utils::mode=1;
-int utils::move=1;
-int utils::th=50;
-int utils::ph=0;
-int utils::fov=27;
-int utils::light=1;
-double utils::asp=1;
-double utils::dim=3.0;
-int utils::ntex = 1;
-// Light values
-int utils::one       =   1;
-int utils::distance  =   2;
-int utils::inc       =  10;
-int utils::smooth    =   1;
-int utils::local     =   0;
-int utils::emission  =   0;
-int utils::ambient   =  30;
-int utils::diffuse   = 100;
-int utils::specular  =   0;
-int utils::shininess =   0;
-float utils::shiny   =   1;
-int utils::zh        =  90;
-int utils::zph        =  0;
-float utils::ylight  =   0;
-unsigned int utils::textures[2];
+int utils::axes=1;       //  Display axes
+int utils::mode=0;       //  Shader mode
+int utils::move=1;       //  Move light
+int utils::proj=1;       //  Projection type
+int utils::th=0;         //  Azimuth of view angle
+int utils::ph=0;         //  Elevation of view angle
+int utils::fov=55;       //  Field of view (for perspective)
+float utils::spc=1;     //  Specular intensity
+double utils::asp=1;    //  Aspect ratio
+double utils::dim=3.0;   //  Size of world
+double utils::scale=0.5; //  Image scale
+int utils::zh=90;        //  Light azimuth
+float utils::Ylight=2;
+float utils::RGBA[4] = {1,1,1,1};  //  Colors
+int utils::obj = 1;
 
 
-int main(int argc, char** argv){
-    utils *my_utils = new utils();
-    glutInit( & argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    glutInitWindowSize(1000, 1000);
-    glutCreateWindow("Kodur Krishna Chaitanya: HW6");
-    glPointSize(1);
-    glutDisplayFunc(utils::display_scene);
-    glutReshapeFunc(utils::reshape_window);
+
+int main(int argc,char* argv[]){
+    utils my_utils;
+    //  Initialize GLUT
+    glutInit(&argc,argv);
+//    if (argc!=2 && argc!=3 && argc!=6) Fatal("Usage: %s <obj> [scale [R G B]]\n",argv[0]);
+    //  Request double buffered, true color window with Z buffering at 600x600
+    glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
+    glutInitWindowSize(600,600);
+    glutCreateWindow("Model Loader");
+    //  Set callbacks
+    glutDisplayFunc(utils::display);
+    glutReshapeFunc(utils::reshape);
     glutSpecialFunc(utils::special);
-    glutKeyboardFunc(my_utils->key);
+    glutKeyboardFunc(utils::key);
     glutIdleFunc(utils::idle);
-    utils::textures[0] = LoadTexBMP("crate.bmp");
-    utils::textures[1] = LoadTexBMP("rock_texture.bmp");
+    //  Load object
+    utils::obj = LoadOBJ("Plane.obj");
+    //  Pass control to GLUT so it can interact with the user
+    ErrCheck("init");
     glutMainLoop();
     return 0;
 }
