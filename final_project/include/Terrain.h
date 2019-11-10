@@ -1,9 +1,4 @@
-//
-// Created by shivababa on 11/9/19.
-//
-
-#ifndef OPENGL_ASSIGNMENTS_TERRAIN_H
-#define OPENGL_ASSIGNMENTS_TERRAIN_H
+#pragma once;
 
 class Terrain
 {
@@ -26,7 +21,7 @@ public:
 protected:
     void GenerateIndexBuffer();
     void GenerateNormals();
-    // Generates the vertex buffer objects from the
+    // Generates the vertex buffer objects from the 
     // position, normal, texture, and color buffers
     void GenerateVertexBuffers();
 
@@ -58,6 +53,7 @@ private:
     GLuint  m_GLTextures[m_uiNumTextures];
 
     glm::mat4x4 m_LocalToWorldMatrix;
+    glm::mat4x4 m_InverseLocalToWorldMatrix;
 
     // The dimensions of the heightmap texture
     glm::uivec2 m_HeightmapDimensions;
@@ -69,6 +65,3 @@ private:
     // for each step when building the terrain
     float   m_fBlockScale;
 };
-
-
-#endif //OPENGL_ASSIGNMENTS_TERRAIN_H

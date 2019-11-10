@@ -11,3 +11,7 @@ file(COPY required_files/piper_bump.bmp DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY required_files/piper_diffuse.bmp DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY required_files/piper_refl.bmp DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 target_link_libraries(final_project glut GLU GL m CSCIx229)
+
+include_directories(include)
+add_executable(test src/main.cpp)
+target_link_libraries(test glut GLU GL m CSCIx229)

@@ -35,7 +35,7 @@ int main(int argc,char* argv[]){
     //  Request double buffered, true color window with Z buffering at 600x600
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
     glutInitWindowSize(600,600);
-    glutCreateWindow("Model Loader");
+    glutCreateWindow("Final Project");
     //  Set callbacks
     glutDisplayFunc(utils::display);
     glutReshapeFunc(utils::reshape);
