@@ -1,7 +1,9 @@
 /*
  *  Set projection
  */
-#include "../include/CSCIx229.h"
+#include "CSCIx229.h"
+
+
 
 void Project(double fov,double asp,double dim)
 {
