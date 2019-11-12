@@ -66,7 +66,7 @@ float utils::plane_yaw = 0.0;  // yaw [rad]
 float utils::PLANE_YAW_RATE = 0.02;  //yaw rate [rad]
 
 //gimbal
-float utils::Azimuth = 20.0f;			// Rotated up or down by this amount
+float utils::Azimuth = -7.0f;			// Rotated up or down by this amount
 float utils::azimuth_max = 40.0f;
 float utils::azimuth_min = 0.0f;
 float utils::AngleStepSize = 3.0f;		// Step three degrees at a time
@@ -86,6 +86,7 @@ int utils::gradientDepth = 0;  //if 1, then render with gradient depth   if 0, r
 int utils::WireFrameOn = 0;			// == 1 for wire frame mode
 int utils::CullBackFacesOn = 1;		// == 1 if culling back faces.
 int utils::SmoothShading = 1;          // == 1 if smooth, 0 if flat
+unsigned int utils::textures[1];
 
 
 
@@ -97,9 +98,11 @@ int main(int argc,char* argv[]){
 //    if (argc!=2 && argc!=3 && argc!=6) Fatal("Usage: %s <obj> [scale [R G B]]\n",argv[0]);
     //  Request double buffered, true color window with Z buffering at 600x600
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
+
     glutInitWindowSize(600,600);
     glutCreateWindow("Final Project");
     //  Set callbacks
+    glClearColor(1.0, 1.0, 1.0, 0.0);
     glutDisplayFunc(utils::display);
     glutReshapeFunc(utils::reshape);
     glutSpecialFunc(utils::special);
@@ -107,6 +110,8 @@ int main(int argc,char* argv[]){
     glutIdleFunc(utils::idle);
     //  Load object
     utils::obj = LoadOBJ("Plane.obj");
+    utils::textures[0] = LoadTexBMP("crate.bmp");
+
     //  Pass control to GLUT so it can interact with the user
     ErrCheck("init");
     glutMainLoop();

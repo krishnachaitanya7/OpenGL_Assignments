@@ -24,6 +24,7 @@ public:
     static float Ylight;   //  Light elevation
     static int obj;          //  Object display list
     static float RGBA[4];  //  Colors
+    static unsigned int textures[1];
     static void display();
     static void idle();
     static void special(int key,int x,int y);
