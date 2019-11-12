@@ -2,7 +2,7 @@
  * Reference: ex13 from Moodle
  * */
 #include <iostream>
-#include "../include/util.h"
+#include "util.h"
 #define GL_GLEXT_PROTOTYPES
 #include <GL/glut.h>
 #include "CSCIx229.h"
@@ -131,24 +131,27 @@ void utils::display(){
     }
 
     // Flush the pipeline, swap the buffers
+//    glFlush();
+//    glutSwapBuffers();
+//    glutPostRedisplay();
 
-//    const double len=2.0;  //  Length of axes
-//    //  Light position and colors
-//    float Emission[]  = {0.0,0.0,0.0,1.0};
-//    float Ambient[]   = {0.3,0.3,0.3,1.0};
-//    float Diffuse[]   = {1.0,1.0,1.0,1.0};
-//    float Specular[]  = {spc,spc,spc,1.0};
-//    float Position[]  = {static_cast<float>(2*Cos(zh)),Ylight,static_cast<float>(2*Sin(zh)),1.0};
-//    float Shinyness[] = {16};
-//
-//    //  Erase the window and the depth buffer
+    const double len=2.0;  //  Length of axes
+    //  Light position and colors
+    float Emission[]  = {0.0,0.0,0.0,1.0};
+    float Ambient[]   = {0.3,0.3,0.3,1.0};
+    float Diffuse[]   = {1.0,1.0,1.0,1.0};
+    float Specular[]  = {spc,spc,spc,1.0};
+    float Position[]  = {static_cast<float>(2*Cos(zh)),Ylight,static_cast<float>(2*Sin(zh)),1.0};
+    float Shinyness[] = {16};
+
+    //  Erase the window and the depth buffer
 //    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-//
-//    //  Enable Z-buffering in OpenGL
+
+    //  Enable Z-buffering in OpenGL
 //    glEnable(GL_DEPTH_TEST);
-//    //  Undo previous transformations
-//    glLoadIdentity();
-//    //  Perspective - set eye position
+    //  Undo previous transformations
+    glLoadIdentity();
+    //  Perspective - set eye position
 //    if (proj)
 //    {
 //        double Ex = -2*dim*Sin(th)*Cos(ph);
@@ -162,65 +165,65 @@ void utils::display(){
 //        glRotatef(ph,1,0,0);
 //        glRotatef(th,0,1,0);
 //    }
-//
-//    //  Draw light position as sphere (still no lighting here)
-//    glColor3f(1,1,1);
-//    glPushMatrix();
-//    glTranslated(Position[0],Position[1],Position[2]);
-//    glutSolidSphere(0.03,10,10);
-//    glPopMatrix();
-//
-//    //  OpenGL should normalize normal vectors
-//    glEnable(GL_NORMALIZE);
-//    //  Enable lighting
-//    glEnable(GL_LIGHTING);
-//    //  Enable light 0
-//    glEnable(GL_LIGHT0);
-//    //  Set ambient, diffuse, specular components and position of light 0
-//    glLightfv(GL_LIGHT0,GL_AMBIENT ,Ambient);
-//    glLightfv(GL_LIGHT0,GL_DIFFUSE ,Diffuse);
-//    glLightfv(GL_LIGHT0,GL_SPECULAR,Specular);
-//    glLightfv(GL_LIGHT0,GL_POSITION,Position);
-//    //  Set materials
-//    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,Shinyness);
-//    glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,RGBA);
-//    glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,RGBA);
-//    glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,Specular);
-//    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,Emission);
-//
-//    //  Draw the model
-//    glPushMatrix();
-//    glScaled(scale,scale,scale);
-//    glCallList(obj);
-//    glPopMatrix();
-//
-//    //  Draw axes - no lighting from here on
-//    glDisable(GL_LIGHTING);
-//    glColor3f(1,1,1);
-//    if (axes)
-//    {
-//        glBegin(GL_LINES);
-//        glVertex3d(0.0,0.0,0.0);
-//        glVertex3d(len,0.0,0.0);
-//        glVertex3d(0.0,0.0,0.0);
-//        glVertex3d(0.0,len,0.0);
-//        glVertex3d(0.0,0.0,0.0);
-//        glVertex3d(0.0,0.0,len);
-//        glEnd();
-//        //  Label axes
-//        glRasterPos3d(len,0.0,0.0);
-//        Print("X");
-//        glRasterPos3d(0.0,len,0.0);
-//        Print("Y");
-//        glRasterPos3d(0.0,0.0,len);
-//        Print("Z");
-//    }
-//    //  Display parameters
-//    glWindowPos2i(5,5);
-//    Print("Angle=%d,%d  Dim=%.1f Projection=%s",
-//          th,ph,dim,proj?"Perpective":"Orthogonal");
-//    //  Render the scene and make it visible
-//    ErrCheck("display");
+
+    //  Draw light position as sphere (still no lighting here)
+    glColor3f(1,1,1);
+    glPushMatrix();
+    glTranslated(Position[0],Position[1],Position[2]);
+    glutSolidSphere(0.03,10,10);
+    glPopMatrix();
+
+    //  OpenGL should normalize normal vectors
+    glEnable(GL_NORMALIZE);
+    //  Enable lighting
+    glEnable(GL_LIGHTING);
+    //  Enable light 0
+    glEnable(GL_LIGHT0);
+    //  Set ambient, diffuse, specular components and position of light 0
+    glLightfv(GL_LIGHT0,GL_AMBIENT ,Ambient);
+    glLightfv(GL_LIGHT0,GL_DIFFUSE ,Diffuse);
+    glLightfv(GL_LIGHT0,GL_SPECULAR,Specular);
+    glLightfv(GL_LIGHT0,GL_POSITION,Position);
+    //  Set materials
+    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,Shinyness);
+    glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,RGBA);
+    glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,RGBA);
+    glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,Specular);
+    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,Emission);
+
+    //  Draw the model
+    glPushMatrix();
+    glScaled(scale,scale,scale);
+    glCallList(obj);
+    glPopMatrix();
+
+    //  Draw axes - no lighting from here on
+    glDisable(GL_LIGHTING);
+    glColor3f(1,1,1);
+    if (axes)
+    {
+        glBegin(GL_LINES);
+        glVertex3d(0.0,0.0,0.0);
+        glVertex3d(len,0.0,0.0);
+        glVertex3d(0.0,0.0,0.0);
+        glVertex3d(0.0,len,0.0);
+        glVertex3d(0.0,0.0,0.0);
+        glVertex3d(0.0,0.0,len);
+        glEnd();
+        //  Label axes
+        glRasterPos3d(len,0.0,0.0);
+        Print("X");
+        glRasterPos3d(0.0,len,0.0);
+        Print("Y");
+        glRasterPos3d(0.0,0.0,len);
+        Print("Z");
+    }
+    //  Display parameters
+    glWindowPos2i(5,5);
+    Print("Angle=%d,%d  Dim=%.1f Projection=%s",
+          th,ph,dim,proj?"Perpective":"Orthogonal");
+    //  Render the scene and make it visible
+    ErrCheck("display");
     glFlush();
     glutSwapBuffers();
     glutPostRedisplay();
