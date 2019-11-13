@@ -35,6 +35,7 @@ public:
     static float lerp(float u, float v, float a);
     static void lerp(float* u, float* v, float a, int len, float* retval);
     static void initTerrain();
+    static void particles_generator();
 
 
 

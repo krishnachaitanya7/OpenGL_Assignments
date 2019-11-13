@@ -61,8 +61,8 @@ float utils::plane_y = 10.0;
 float utils::plane_alt = 5.2;  //the plane altitude
 
 //dynamics
-float utils::PLANE_SPEED = 0.1;  //speed per tick
-float utils::plane_yaw = 0.0;  // yaw [rad]
+float utils::PLANE_SPEED = 1.0;  //speed per tick
+float utils::plane_yaw = 10.0;  // yaw [rad]
 float utils::PLANE_YAW_RATE = 0.02;  //yaw rate [rad]
 
 //gimbal

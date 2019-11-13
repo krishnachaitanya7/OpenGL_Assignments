@@ -428,17 +428,17 @@ void utils::renderBlock(TerrainBlock* TB, float depth, float dispS, float dispT)
 //            ambDiff[0] = TB->getColor(s,t,0); ambDiff[1] = TB->getColor(s,t,1); ambDiff[2] = TB->getColor(s,t,2);
 //            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambDiff );
             glNormal3f(TB->getNormal(s,t,0), TB->getNormal(s,t,1), TB->getNormal(s,t,2));
-            glTexCoord2f(0.1,0.9); glVertex3f(TB->get(s,t,0), TB->get(s,t,1), TB->get(s,t,2));
+            glTexCoord2f(0,0); glVertex3f(TB->get(s,t,0), TB->get(s,t,1), TB->get(s,t,2));
             //glColor3fv(cA);
 //            ambDiff[0] = cA[0]; ambDiff[1] = cA[1]; ambDiff[2] = cA[2];
 //            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambDiff );
             glNormal3f(TB->getNormal(s+hN,t,0), TB->getNormal(s+hN,t,1), TB->getNormal(s+hN,t,2));
-            glTexCoord2f(0.1,0.1); glVertex3f(TB->get(s+hN,t,0), TB->get(s+hN,t,1), aHA);
+            glTexCoord2f(0,1); glVertex3f(TB->get(s+hN,t,0), TB->get(s+hN,t,1), aHA);
             //glColor3fv(cB);
 //            ambDiff[0] = cB[0]; ambDiff[1] = cB[1]; ambDiff[2] = cB[2];
 //            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambDiff );
             glNormal3f(TB->getNormal(s,t+hN,0),TB->getNormal(s,t+hN,1),TB->getNormal(s,t+hN,2));
-            glTexCoord2f(0.9,0.9); glVertex3f(TB->get(s,t+hN,0), TB->get(s,t+hN,1), aHB);
+            glTexCoord2f(0,0); glVertex3f(TB->get(s,t+hN,0), TB->get(s,t+hN,1), aHB);
             //glColor3fv(cC);
 //            ambDiff[0] = cC[0]; ambDiff[1] = cC[1]; ambDiff[2] = cC[2];
 //            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambDiff );
@@ -513,9 +513,28 @@ void utils::lerp(float* u, float* v, float a, int len, float* retval){
 }
 
 void utils::initTerrain(){
-
     myTerrain = new Terrain(TRI_BLOCKS, TRI_DEPTH, 0.8, 0.0f, 4.0f, 4.0f);
 }
 
-
+//void utils::particles_generator(){
+//    static const GLfloat g_vertex_buffer_data[] = {
+//            -0.5f, -0.5f, 0.0f,
+//            0.5f, -0.5f, 0.0f,
+//            -0.5f, 0.5f, 0.0f,
+//            0.5f, 0.5f, 0.0f,
+//    };
+//    GLuint billboard_vertex_buffer;
+//    glGenBuffers(1, &billboard_vertex_buffer);
+//    glBindBuffer(GL_ARRAY_BUFFER, billboard_vertex_buffer);
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+//    GLuint particles_position_buffer;
+//    glGenBuffers(1, &particles_position_buffer);
+//    glBindBuffer(GL_ARRAY_BUFFER, particles_position_buffer);
+//    glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLfloat), NULL, GL_STREAM_DRAW);
+//    GLuint particles_color_buffer;
+//    glGenBuffers(1, &particles_color_buffer);
+//    glBindBuffer(GL_ARRAY_BUFFER, particles_color_buffer);
+//    glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLubyte), NULL, GL_STREAM_DRAW);
+//
+//}
 
