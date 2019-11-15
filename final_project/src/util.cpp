@@ -18,14 +18,28 @@ void utils::display(){
     glEnable( GL_DEPTH_TEST );	// Depth testing must be turned on
     glEnable(GL_LIGHTING);		// Enable lighting calculations
     glEnable(GL_LIGHT0);  //light from above
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);	 // Set global ambient light
+    float emission = 0;
+    float shiny = 1.0;
+    float white[] = {1,1,1,1};
+    float Emission[]  = {0.0,0.0,static_cast<float>(0.01*emission),1.0};
+    glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS,shiny);
+    glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,white);
+    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,Emission);
+    glEnable(GL_NORMALIZE);
+    //  Enable lighting
+    glEnable(GL_LIGHTING);
+    //  Location of viewer for specular calculations
+//    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER,local);
+    //  glColor sets ambient and diffuse color materials
+    glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE);
+    glEnable(GL_COLOR_MATERIAL);
+    //  Enable light 0
+    glEnable(GL_LIGHT0);
+//    glLightfv(GL_LIGHT0,GL_POSITION,Position);
+//    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);	 // Set global ambient light
 //    glShadeModel( GL_SMOOTH );	// Set the shading to smooth.  This gets overwritten as appropriate later
     glCullFace( GL_BACK );		// These two commands will cause backfaces to not be drawn
     glEnable(GL_NORMALIZE);
-    glEnable(GL_TEXTURE_2D);
-    glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE);
-    glBindTexture(GL_TEXTURE_2D,textures[0]);
-
     tick += timeStep;
     if(tick > 10){
         tick = 0;
@@ -126,6 +140,7 @@ void utils::display(){
 
                         if(thetaD < PI / 2 && thetaD > -PI / 2){
                             depth = (gradientDepth == 1 ? (viewRadius - dist) / viewRadius * maxRenderDepth : maxRenderDepth);
+
                             renderBlock(TB, depth, dispS, dispT);
                         }
                     }
@@ -134,26 +149,7 @@ void utils::display(){
         }
     }
 
-    // Flush the pipeline, swap the buffers
-//    glFlush();
-//    glutSwapBuffers();
-//    glutPostRedisplay();
 
-    const double len=2.0;  //  Length of axes
-    //  Light position and colors
-    float Emission[]  = {0.0,0.0,0.0,1.0};
-    float Ambient[]   = {0.3,0.3,0.3,1.0};
-    float Diffuse[]   = {1.0,1.0,1.0,1.0};
-    float Specular[]  = {spc,spc,spc,1.0};
-    float Position[]  = {static_cast<float>(2*Cos(zh)),Ylight,static_cast<float>(2*Sin(zh)),1};
-    float Shinyness[] = {16};
-
-    //  Erase the window and the depth buffer
-//    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-
-    //  Enable Z-buffering in OpenGL
-//    glEnable(GL_DEPTH_TEST);
-    //  Undo previous transformations
     glLoadIdentity();
     //  Perspective - set eye position
     if (proj)
@@ -170,56 +166,32 @@ void utils::display(){
         glRotatef(th,0,1,0);
     }
 
-    //  Draw light position as sphere (still no lighting here)
-//    glColor3f(1,1,1);
-//    glPushMatrix();
-//    glTranslated(Position[0],Position[1],Position[2]);
-//    glutSolidSphere(0.03,10,10);
-//    glPopMatrix();
-
-    //  OpenGL should normalize normal vectors
-
-
-    //  Set ambient, diffuse, specular components and position of light 0
-//    glLightfv(GL_LIGHT0,GL_AMBIENT ,Ambient);
-//    glLightfv(GL_LIGHT0,GL_DIFFUSE ,Diffuse);
-//    glLightfv(GL_LIGHT0,GL_SPECULAR,Specular);
-//    glLightfv(GL_LIGHT0,GL_POSITION,Position);
-//    //  Set materials
-//    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,Shinyness);
-//    glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,RGBA);
-//    glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,RGBA);
-//    glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,Specular);
-//    glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,Emission);
-
     //  Draw the model
+    glColor3f(1.0, 1.0, 1.0);
     glPushMatrix();
     glRotatef(-180, 0.0, 1.0, 0.0);
     glScaled(scale,scale,scale);
     glCallList(obj);
     glPopMatrix();
-
     //  Draw axes - no lighting from here on
-    glDisable(GL_LIGHTING);
-    glColor3f(1,1,1);
-    if (axes)
-    {
-        glBegin(GL_LINES);
-        glVertex3d(0.0,0.0,0.0);
-        glVertex3d(len,0.0,0.0);
-        glVertex3d(0.0,0.0,0.0);
-        glVertex3d(0.0,len,0.0);
-        glVertex3d(0.0,0.0,0.0);
-        glVertex3d(0.0,0.0,len);
-        glEnd();
-        //  Label axes
-        glRasterPos3d(len,0.0,0.0);
-        Print("X");
-        glRasterPos3d(0.0,len,0.0);
-        Print("Y");
-        glRasterPos3d(0.0,0.0,len);
-        Print("Z");
-    }
+//    if (axes)
+//    {
+//        glBegin(GL_LINES);
+//        glVertex3d(0.0,0.0,0.0);
+//        glVertex3d(len,0.0,0.0);
+//        glVertex3d(0.0,0.0,0.0);
+//        glVertex3d(0.0,len,0.0);
+//        glVertex3d(0.0,0.0,0.0);
+//        glVertex3d(0.0,0.0,len);
+//        glEnd();
+//        //  Label axes
+//        glRasterPos3d(len,0.0,0.0);
+//        Print("X");
+//        glRasterPos3d(0.0,len,0.0);
+//        Print("Y");
+//        glRasterPos3d(0.0,0.0,len);
+//        Print("Z");
+//    }
     //  Display parameters
     glWindowPos2i(5,5);
     Print("Angle=%d,%d  Dim=%.1f Projection=%s",
@@ -332,12 +304,6 @@ void utils::reshape(int width,int height){
 }
 
 void utils::renderBlock(TerrainBlock* TB, float depth, float dispS, float dispT){
-    //set material properties
-
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, TerrainAmbDiff );
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, TerrainSpecular );
-    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, TerrainShininess);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, NoEmit);
 
     float x = myTerrain->sToX(dispS, dispT);
     float y = myTerrain->tToY(dispS, dispT);
@@ -355,11 +321,8 @@ void utils::renderBlock(TerrainBlock* TB, float depth, float dispS, float dispT)
     int hN = N/2;  //the half N jump
 
     glPushMatrix();
-    glColor3f(1,1,1);
     glRotatef(-90, 1.0, 0.0, 0.0);
     glTranslatef(x,y,0);  //translate as appropriate
-
-    float ambDiff[] = {0.0f, 0.0f, 0.0f, 1.0f};
 
     //draw the triangle
     for(int s = 0; s < n; s+=N)
@@ -367,12 +330,12 @@ void utils::renderBlock(TerrainBlock* TB, float depth, float dispS, float dispT)
 
         for(int t = 0; t < n; t+=N)
         {
-            //determine the points of the five sub-triangle vertexes
-            float hA = TB->get(s+hN,t,2);     //bottom
-            float hB = TB->get(s, t+hN,2);    //left
-            float hC = TB->get(s+hN,t+hN,2);  //center
-            float hD = TB->get(s+hN,t+N,2);   //top
-            float hE = TB->get(s+N,t+hN,2);   //right
+
+            float hA = TB->get(s+hN,t,2);
+            float hB = TB->get(s, t+hN,2);
+            float hC = TB->get(s+hN,t+hN,2);
+            float hD = TB->get(s+hN,t+N,2);
+            float hE = TB->get(s+N,t+hN,2);
 
             //calculate the expected height
             float hAexpected = (TB->get(s,t, 2) + TB->get(s + N, t, 2)) / 2.0f;
@@ -388,153 +351,73 @@ void utils::renderBlock(TerrainBlock* TB, float depth, float dispS, float dispT)
             float aHD = lerp(hDexpected, hD, alpha);
             float aHE = lerp(hEexpected, hE, alpha);
 
-            //determine the colors of the five sub-triangle vertexes
-//            float cA[] = {TB->getColor(s+hN,t,0), TB->getColor(s+hN,t,1), TB->getColor(s+hN,t,2)};
-//            float cB[] = {TB->getColor(s, t+hN,0), TB->getColor(s, t+hN,1), TB->getColor(s, t+hN,2)};
-//            float cC[] = {TB->getColor(s+hN,t+hN,0), TB->getColor(s+hN,t+hN,1), TB->getColor(s+hN,t+hN,2)};
-//            float cD[] = {TB->getColor(s+hN,t+N,0), TB->getColor(s+hN,t+N,1), TB->getColor(s+hN,t+N,2)};
-//            float cE[] = {TB->getColor(s+N,t+hN,0), TB->getColor(s+N,t+hN,1), TB->getColor(s+N,t+hN,2)};
-//
-//            //calculate expected color
-//            float cAe[] = {(TB->getColor(s,t, 0) + TB->getColor(s + N, t, 0)) / 2.0f,
-//                           (TB->getColor(s,t, 1) + TB->getColor(s + N, t, 1)) / 2.0f,
-//                           (TB->getColor(s,t, 2) + TB->getColor(s + N, t, 2)) / 2.0f};
-//            float cBe[] = {(TB->getColor(s,t, 0) + TB->getColor(s, t + N, 0)) / 2.0f,
-//                           (TB->getColor(s,t, 1) + TB->getColor(s, t + N, 1)) / 2.0f,
-//                           (TB->getColor(s,t, 2) + TB->getColor(s, t + N, 2)) / 2.0f};
-//            float cCe[] = {(TB->getColor(s+N,t, 0) + TB->getColor(s, t + N, 0)) / 2.0f,
-//                           (TB->getColor(s+N,t, 1) + TB->getColor(s, t + N, 1)) / 2.0f,
-//                           (TB->getColor(s+N,t, 2) + TB->getColor(s, t + N, 2)) / 2.0f};
-//            float cDe[] = {(TB->getColor(s,t+N, 0) + TB->getColor(s + N, t + N, 0)) / 2.0f,
-//                           (TB->getColor(s,t+N, 1) + TB->getColor(s + N, t + N, 1)) / 2.0f,
-//                           (TB->getColor(s,t+N, 2) + TB->getColor(s + N, t + N, 2)) / 2.0f};
-//            float cEe[] = {(TB->getColor(s+N,t, 0) + TB->getColor(s + N, t + N, 0)) / 2.0f,
-//                           (TB->getColor(s+N,t, 1) + TB->getColor(s + N, t + N, 1)) / 2.0f,
-//                           (TB->getColor(s+N,t, 2) + TB->getColor(s + N, t + N, 2)) / 2.0f};
-//
-//            //calculate actual color
-//            lerp(cAe, cA, alpha, 3, cAe);
-//            lerp(cBe, cB, alpha, 3, cBe);
-//            lerp(cCe, cC, alpha, 3, cCe);
-//            lerp(cDe, cD, alpha, 3, cDe);
-//            lerp(cEe, cE, alpha, 3, cEe);
-
-            ///////////////////////////////////////////////////////
-            ///  draw the 8 triangles using two triangle strips ///
-            ///////////////////////////////////////////////////////
             glBegin(GL_TRIANGLE_STRIP);
-
-            //glColor3f(TB->getColor(s,t,0), TB->getColor(s,t,1), TB->getColor(s,t,2));
-//            ambDiff[0] = TB->getColor(s,t,0); ambDiff[1] = TB->getColor(s,t,1); ambDiff[2] = TB->getColor(s,t,2);
-//            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambDiff );
             glNormal3f(TB->getNormal(s,t,0), TB->getNormal(s,t,1), TB->getNormal(s,t,2));
-            glTexCoord2f(0,0); glVertex3f(TB->get(s,t,0), TB->get(s,t,1), TB->get(s,t,2));
-            //glColor3fv(cA);
-//            ambDiff[0] = cA[0]; ambDiff[1] = cA[1]; ambDiff[2] = cA[2];
-//            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambDiff );
+            glTexCoord2f(0,0);
+            glVertex3f(TB->get(s,t,0), TB->get(s,t,1), TB->get(s,t,2));
+
             glNormal3f(TB->getNormal(s+hN,t,0), TB->getNormal(s+hN,t,1), TB->getNormal(s+hN,t,2));
-            glTexCoord2f(0,1); glVertex3f(TB->get(s+hN,t,0), TB->get(s+hN,t,1), aHA);
-            //glColor3fv(cB);
-//            ambDiff[0] = cB[0]; ambDiff[1] = cB[1]; ambDiff[2] = cB[2];
-//            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambDiff );
+            glTexCoord2f(0,1);
+            glVertex3f(TB->get(s+hN,t,0), TB->get(s+hN,t,1), aHA);
+
             glNormal3f(TB->getNormal(s,t+hN,0),TB->getNormal(s,t+hN,1),TB->getNormal(s,t+hN,2));
-            glTexCoord2f(0,0); glVertex3f(TB->get(s,t+hN,0), TB->get(s,t+hN,1), aHB);
-            //glColor3fv(cC);
-//            ambDiff[0] = cC[0]; ambDiff[1] = cC[1]; ambDiff[2] = cC[2];
-//            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambDiff );
+            glTexCoord2f(0,0);
+            glVertex3f(TB->get(s,t+hN,0), TB->get(s,t+hN,1), aHB);
+
             glNormal3f(TB->getNormal(s+hN,t+hN,0),TB->getNormal(s+hN,t+hN,1),TB->getNormal(s+hN,t+hN,2));
-            glTexCoord2f(0.9,0.1); glVertex3f(TB->get(s+hN,t+hN,0), TB->get(s+hN,t+hN,1), aHC);
-            //glColor3f(TB->getColor(s,t+N,0), TB->getColor(s,t+N,1), TB->getColor(s,t+N,2));
-//            ambDiff[0] = TB->getColor(s,t+N,0); ambDiff[1] = TB->getColor(s,t+N,1); ambDiff[2] = TB->getColor(s,t+N,2);
-//            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambDiff );
+            glTexCoord2f(0.9,0.1);
+            glVertex3f(TB->get(s+hN,t+hN,0), TB->get(s+hN,t+hN,1), aHC);
+
             glNormal3f(TB->getNormal(s,t+N,0), TB->getNormal(s,t+N,1), TB->getNormal(s,t+N,2));
-            glTexCoord2f(0.9,0.9); glVertex3f(TB->get(s,t+N,0), TB->get(s,t+N,1), TB->get(s,t+N,2));
-            //glColor3fv(cD);
-//            ambDiff[0] = cD[0]; ambDiff[1] = cD[1]; ambDiff[2] = cD[2];
-//            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambDiff );
+            glTexCoord2f(0.9,0.9);
+            glVertex3f(TB->get(s,t+N,0), TB->get(s,t+N,1), TB->get(s,t+N,2));
+
             glNormal3f(TB->getNormal(s+hN,t+N,0), TB->getNormal(s+hN,t+N,1), TB->getNormal(s+hN,t+N,2));
-            glTexCoord2f(0.9,0.1); glVertex3f(TB->get(s+hN,t+N,0), TB->get(s+hN,t+N,1), aHD);
+            glTexCoord2f(0.9,0.1);
+            glVertex3f(TB->get(s+hN,t+N,0), TB->get(s+hN,t+N,1), aHD);
 
             glEnd();
 
             glBegin(GL_TRIANGLE_STRIP);
-
-            //glColor3f(TB->getColor(s+hN,t,0), TB->getColor(s+hN,t,1), TB->getColor(s+hN,t,2));
-//            ambDiff[0] = TB->getColor(s+hN,t,0); ambDiff[1] = TB->getColor(s+hN,t,1); ambDiff[2] = TB->getColor(s+hN,t,2);
-//            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambDiff );
             glNormal3f(TB->getNormal(s+hN,t,0), TB->getNormal(s+hN,t,1), TB->getNormal(s+hN,t,2));
-            glTexCoord2f(0.1,0.9); glVertex3f(TB->get(s+hN,t,0), TB->get(s+hN,t,1), aHA);
-            //glColor3f(TB->getColor(s+N,t,0), TB->getColor(s+N,t,1), TB->getColor(s+N,t,2));
-//            ambDiff[0] = TB->getColor(s+N,t,0); ambDiff[1] = TB->getColor(s+N,t,1); ambDiff[2] = TB->getColor(s+N,t,2);
-//            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambDiff );
+//            glTexCoord2f(0.1,0.9);
+            glVertex3f(TB->get(s+hN,t,0), TB->get(s+hN,t,1), aHA);
+
             glNormal3f(TB->getNormal(s+N,t,0), TB->getNormal(s+N,t,1), TB->getNormal(s+N,t,2));
-            glTexCoord2f(0.1,0.1);glVertex3f(TB->get(s+N,t,0), TB->get(s+N,t,1), TB->get(s+N,t,2));
-            //glColor3f(TB->getColor(s+hN,t+hN,0), TB->getColor(s+hN,t+hN,1), TB->getColor(s+hN,t+hN,2));
-//            ambDiff[0] = TB->getColor(s+hN,t+hN,0); ambDiff[1] = TB->getColor(s+hN,t+hN,1); ambDiff[2] = TB->getColor(s+hN,t+hN,2);
-//            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambDiff );
+//            glTexCoord2f(0.1,0.1);
+            glVertex3f(TB->get(s+N,t,0), TB->get(s+N,t,1), TB->get(s+N,t,2));
+
             glNormal3f(TB->getNormal(s+hN,t+hN,0), TB->getNormal(s+hN,t+hN,1), TB->getNormal(s+hN,t+hN,2));
-            glTexCoord2f(0.9,0.9); glVertex3f(TB->get(s+hN,t+hN,0), TB->get(s+hN,t+hN,1), aHC);
-            //glColor3f(TB->getColor(s+N,t+hN,0), TB->getColor(s+N,t+hN,1), TB->getColor(s+N,t+hN,2));
-//            ambDiff[0] = TB->getColor(s+N,t+hN,0); ambDiff[1] = TB->getColor(s+N,t+hN,1); ambDiff[2] = TB->getColor(s+N,t+hN,2);
-//            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambDiff );
+//            glTexCoord2f(0.9,0.9);
+            glVertex3f(TB->get(s+hN,t+hN,0), TB->get(s+hN,t+hN,1), aHC);
+
             glNormal3f(TB->getNormal(s+N,t+hN,0), TB->getNormal(s+N,t+hN,1), TB->getNormal(s+N,t+hN,2));
-            glTexCoord2f(0.9,0.1); glVertex3f(TB->get(s+N,t+hN,0), TB->get(s+N,t+hN,1), aHE);
-            //glColor3f(TB->getColor(s+hN,t+N,0), TB->getColor(s+hN,t+N,1), TB->getColor(s+hN,t+N,2));
-//            ambDiff[0] = TB->getColor(s+hN,t+N,0); ambDiff[1] = TB->getColor(s+hN,t+N,1); ambDiff[2] = TB->getColor(s+hN,t+N,2);
-//            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambDiff );
+//            glTexCoord2f(0.9,0.1);
+            glVertex3f(TB->get(s+N,t+hN,0), TB->get(s+N,t+hN,1), aHE);
+
             glNormal3f(TB->getNormal(s+hN,t+N,0), TB->getNormal(s+hN,t+N,1), TB->getNormal(s+hN,t+N,2));
-            glTexCoord2f(0.9,0.9); glVertex3f(TB->get(s+hN,t+N,0), TB->get(s+hN,t+N,1), aHD);
-            //glColor3f(TB->getColor(s+N,t+N,0), TB->getColor(s+N,t+N,1), TB->getColor(s+N,t+N,2));
-//            ambDiff[0] = TB->getColor(s+N,t+N,0); ambDiff[1] = TB->getColor(s+N,t+N,1); ambDiff[2] = TB->getColor(s+N,t+N,2);
-//            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, ambDiff );
+//            glTexCoord2f(0.9,0.9);
+            glVertex3f(TB->get(s+hN,t+N,0), TB->get(s+hN,t+N,1), aHD);
+
             glNormal3f(TB->getNormal(s+N,t+N,0), TB->getNormal(s+N,t+N,1), TB->getNormal(s+N,t+N,2));
-            glTexCoord2f(0.9,0.1); glVertex3f(TB->get(s+N,t+N,0), TB->get(s+N,t+N,1), TB->get(s+N,t+N,2));
+//            glTexCoord2f(0.9,0.1);
+            glVertex3f(TB->get(s+N,t+N,0), TB->get(s+N,t+N,1), TB->get(s+N,t+N,2));
 
             glEnd();
         }
-
     }
-
     glPopMatrix();
+
 }
 
 float utils::lerp(float u, float v, float a){
     return u * (1.0f-a) + v*a;
 }
 
-/**
- * returns the linear interpolation between vectors u and v
- */
-void utils::lerp(float* u, float* v, float a, int len, float* retval){
-    for(int i = 0; i < len; i++)
-    {
-        retval[i] = u[i] * (1.0f-a) + v[i]*a;
-    }
-}
 
 void utils::initTerrain(){
-    myTerrain = new Terrain(TRI_BLOCKS, TRI_DEPTH, 0.8, 0.0f, 4.0f, 4.0f);
+    myTerrain = new Terrain(TRI_BLOCKS, TRI_DEPTH, 0.8, 0.0f, 0.0f, 4.0f);
 }
 
-//void utils::particles_generator(){
-//    static const GLfloat g_vertex_buffer_data[] = {
-//            -0.5f, -0.5f, 0.0f,
-//            0.5f, -0.5f, 0.0f,
-//            -0.5f, 0.5f, 0.0f,
-//            0.5f, 0.5f, 0.0f,
-//    };
-//    GLuint billboard_vertex_buffer;
-//    glGenBuffers(1, &billboard_vertex_buffer);
-//    glBindBuffer(GL_ARRAY_BUFFER, billboard_vertex_buffer);
-//    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-//    GLuint particles_position_buffer;
-//    glGenBuffers(1, &particles_position_buffer);
-//    glBindBuffer(GL_ARRAY_BUFFER, particles_position_buffer);
-//    glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLfloat), NULL, GL_STREAM_DRAW);
-//    GLuint particles_color_buffer;
-//    glGenBuffers(1, &particles_color_buffer);
-//    glBindBuffer(GL_ARRAY_BUFFER, particles_color_buffer);
-//    glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLubyte), NULL, GL_STREAM_DRAW);
-//
-//}
+
 

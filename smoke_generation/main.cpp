@@ -1,9 +1,10 @@
 #define GL_GLEXT_PROTOTYPES
+
+#include "utils.h"
 #include <GL/glut.h>
-#include "include/util.h"
-#include "CSCIx229.h"
-#include "WireFrameScene.h"
-#include "TerrainBlock.h"
+#include "particle_generator.h"
+#include "resource_manager.h"
+
 
 /*
  * Some Good Resources
@@ -11,7 +12,7 @@
  * https://www.3dgep.com/multi-textured-terrain-in-opengl/
  * */
 
-int utils::axes=0;       /*  Display axes*/
+int utils::axes=1;       /*  Display axes*/
 int utils::mode=0;       //  Shader mode
 int utils::move=1;       //  Move light
 int utils::proj=1;       //  Projection type
@@ -39,7 +40,7 @@ float utils::TerrainSpecular[4] = {0.0, 0.0, 0.0, 1.0};	//the specular color (no
 ///////////////////////
 
 //ambient light
-float utils::ambientLight[4] = {1.0, 1.0, 1.0, 0.0};  //ambient scene (white) light
+float utils::ambientLight[4] = {0.4, 0.4, 0.4, 1.0};  //ambient scene (white) light
 float utils::Ltdiff[4] = {0.2,  0.2,  0.2, 1.0};
 float utils::Ltspec[4] = {0.2, 0.2, 0.2, 1.0};
 
@@ -49,7 +50,6 @@ float utils::Ltspec[4] = {0.2, 0.2, 0.2, 1.0};
 
 int utils::TRI_DEPTH = 8;
 int utils::TRI_BLOCKS = 10;
-Terrain *utils::myTerrain;
 
 ////////////////////////
 ///   Plane Model    ///
@@ -87,33 +87,35 @@ int utils::WireFrameOn = 0;			// == 1 for wire frame mode
 int utils::CullBackFacesOn = 1;		// == 1 if culling back faces.
 int utils::SmoothShading = 1;          // == 1 if smooth, 0 if flat
 unsigned int utils::textures[1];
-
-
+ParticleGenerator* utils::Particles;
 
 int main(int argc,char* argv[]){
 
     //  Initialize GLUT
+
     glutInit(&argc,argv);
-    utils::initTerrain();
+
+
 //    if (argc!=2 && argc!=3 && argc!=6) Fatal("Usage: %s <obj> [scale [R G B]]\n",argv[0]);
     //  Request double buffered, true color window with Z buffering at 600x600
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 
     glutInitWindowSize(600,600);
-    glutCreateWindow("Final Project");
+    glutCreateWindow("Smoke");
+    GLenum err = glewInit();
     //  Set callbacks
     glClearColor(1.0, 1.0, 1.0, 0.0);
+    ResourceManager::LoadShader("particle.vs", "particle.frag", nullptr, "particle");
+    ResourceManager::LoadTexture("particle.png", GL_TRUE, "particle");
+    utils::Particles = new ParticleGenerator(
+            ResourceManager::GetShader("particle"),
+            ResourceManager::GetTexture("particle"),
+            500
+    );
     glutDisplayFunc(utils::display);
     glutReshapeFunc(utils::reshape);
     glutSpecialFunc(utils::special);
     glutKeyboardFunc(utils::key);
-    glutIdleFunc(utils::idle);
-    //  Load object
-    utils::obj = LoadOBJ("Plane.obj");
-    utils::textures[0] = LoadTexBMP("crate.bmp");
-
-    //  Pass control to GLUT so it can interact with the user
-    ErrCheck("init");
     glutMainLoop();
     return 0;
 }

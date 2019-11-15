@@ -10,6 +10,9 @@ add_subdirectory(final_project)
 
 link_directories(${CMAKE_SOURCE_DIR}/terrain_fractals)
 add_subdirectory(terrain_fractals)
+
+link_directories(${CMAKE_SOURCE_DIR}/smoke_generation)
+add_subdirectory(smoke_generation)
 #include(homework_0/CMakeLists.txt)
 #include(homework_2/CMakeLists.txt)
 #include(homework_3/CMakeLists.txt)
