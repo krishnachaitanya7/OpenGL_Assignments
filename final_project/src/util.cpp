@@ -14,6 +14,8 @@
  *  OpenGL (GLUT) calls this routine to display the scene
  */
 void utils::display(){
+    
+    
 
     glEnable( GL_DEPTH_TEST );	// Depth testing must be turned on
     glEnable(GL_LIGHTING);		// Enable lighting calculations
