@@ -11,7 +11,8 @@
 #include "Terrain.h"
 
 /*
- *  OpenGL (GLUT) calls this routine to display the scene
+ *  OpenGL (GLUT) calls this routine to display the
+ *
  */
 void utils::display(){
     glEnable( GL_DEPTH_TEST );	// Depth testing must be turned on
@@ -25,9 +26,7 @@ void utils::display(){
     glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,white);
     glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,Emission);
     glEnable(GL_NORMALIZE);
-    //  Enable lighting
-    glEnable(GL_LIGHTING);
-    //  Location of viewer for specular calculations
+    //  L̶o̶c̶a̶t̶i̶o̶n̶ ̶o̶f̶ ̶v̶i̶e̶w̶e̶r̶ ̶f̶o̶r̶ ̶s̶p̶e̶c̶u̶l̶a̶r̶ ̶c̶a̶l̶c̶u̶l̶a̶t̶i̶o̶n̶s̶
 //    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER,local);
     //  glColor sets ambient and diffuse color materials
     glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE);
