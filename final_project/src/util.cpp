@@ -26,15 +26,11 @@ void utils::display(){
     glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,white);
     glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,Emission);
     glEnable(GL_NORMALIZE);
-    //  L̶o̶c̶a̶t̶i̶o̶n̶ ̶o̶f̶ ̶v̶i̶e̶w̶e̶r̶ ̶f̶o̶r̶ ̶s̶p̶e̶c̶u̶l̶a̶r̶ ̶c̶a̶l̶c̶u̶l̶a̶t̶i̶o̶n̶s̶
-//    g̶l̶L̶i̶g̶h̶t̶M̶o̶d̶e̶l̶i̶(̶G̶L̶_̶L̶I̶G̶H̶T̶_̶M̶O̶D̶E̶L̶_̶L̶O̶C̶A̶L̶_̶V̶I̶E̶W̶E̶R̶,̶l̶o̶c̶a̶l̶)̶;̶
+
 
     //  glColor sets ambient and diffuse color materials
     glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE);
     glEnable(GL_COLOR_MATERIAL);
-//    glLightfv(GL_LIGHT0,GL_POSITION,Position);
-//    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);	 // Set global ambient light
-//    glShadeModel( GL_SMOOTH );	// Set the shading to smooth.  This gets overwritten as appropriate later
     glCullFace( GL_BACK );		// These two commands will cause backfaces to not be drawn
     glEnable(GL_NORMALIZE);
     tick += timeStep;
