@@ -1,6 +1,3 @@
-/*
- * R̶e̶f̶e̶r̶e̶n̶c̶e̶:̶ ̶e̶x̶1̶3̶ ̶f̶r̶o̶m̶ ̶M̶o̶o̶d̶l̶e̶
- * */
 #include <iostream>
 #include "util.h"
 #define GL_GLEXT_PROTOTYPES
@@ -26,27 +23,24 @@ void utils::display(){
     glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,white);
     glMaterialfv(GL_FRONT_AND_BACK,GL_EMISSION,Emission);
     glEnable(GL_NORMALIZE);
-
-
-    //  glColor sets ambient and diffuse color materials
     glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE);
     glEnable(GL_COLOR_MATERIAL);
-    glCullFace( GL_BACK );		// These two commands will cause backfaces to not be drawn
+    glCullFace(GL_BACK);
     glEnable(GL_NORMALIZE);
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE);
+//    glColor3f(1,1,1);
+    glBindTexture(GL_TEXTURE_2D,textures[0]);
     tick += timeStep;
     if(tick > 10){
         tick = 0;
     }
-
     //move the plane, keep it in the square
     plane_y +=  PLANE_SPEED * cos(plane_yaw);
     plane_x +=  PLANE_SPEED * sin(plane_yaw);
 
     float planeS = myTerrain->xToS(plane_x, plane_y); //s,t loc of plane
     float planeT = myTerrain->yToT(plane_x, plane_y);
-
-    //fprintf(stdout, "%f %f %f  %f  %f\n", plane_x, plane_y, planeS, planeT, plane_alt);
-    //fprintf(stdout, "%f\n", plane_yaw);
 
     float terrainSideLen = myTerrain->getTerrainSideLength();
     int N = myTerrain->getN();
@@ -75,11 +69,7 @@ void utils::display(){
 
     // Clear the rendering window
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    //enable flat or smooth shading
     glShadeModel(SmoothShading == 1 ? GL_SMOOTH : GL_FLAT);
-
-    // Rotate the view
     glMatrixMode( GL_MODELVIEW );			// Current matrix affects objects positions
     glLoadIdentity();						// Initialize to the identity
 
@@ -142,9 +132,7 @@ void utils::display(){
         }
     }
 
-
     glLoadIdentity();
-    //  Perspective - set eye position
     if (proj)
     {
         double Ex = -2*dim*Sin(th)*Cos(ph);
@@ -160,7 +148,6 @@ void utils::display(){
     }
 
     //  Draw the model
-    glColor3f(1.0, 1.0, 1.0);
     glPushMatrix();
     glRotatef(-180, 0.0, 1.0, 0.0);
     glScaled(scale,scale,scale);
@@ -192,6 +179,7 @@ void utils::display(){
     //  Render the scene and make it visible
     ErrCheck("display");
     glFlush();
+    glDisable(GL_TEXTURE_2D);
     glutSwapBuffers();
     glutPostRedisplay();
 }
@@ -373,33 +361,35 @@ void utils::renderBlock(TerrainBlock* TB, float depth, float dispS, float dispT)
 
             glBegin(GL_TRIANGLE_STRIP);
             glNormal3f(TB->getNormal(s+hN,t,0), TB->getNormal(s+hN,t,1), TB->getNormal(s+hN,t,2));
-//            glTexCoord2f(0.1,0.9);
+            glTexCoord2f(0.1,0.9);
             glVertex3f(TB->get(s+hN,t,0), TB->get(s+hN,t,1), aHA);
 
             glNormal3f(TB->getNormal(s+N,t,0), TB->getNormal(s+N,t,1), TB->getNormal(s+N,t,2));
-//            glTexCoord2f(0.1,0.1);
+            glTexCoord2f(0.1,0.1);
             glVertex3f(TB->get(s+N,t,0), TB->get(s+N,t,1), TB->get(s+N,t,2));
 
             glNormal3f(TB->getNormal(s+hN,t+hN,0), TB->getNormal(s+hN,t+hN,1), TB->getNormal(s+hN,t+hN,2));
-//            glTexCoord2f(0.9,0.9);
+            glTexCoord2f(0.9,0.9);
             glVertex3f(TB->get(s+hN,t+hN,0), TB->get(s+hN,t+hN,1), aHC);
 
             glNormal3f(TB->getNormal(s+N,t+hN,0), TB->getNormal(s+N,t+hN,1), TB->getNormal(s+N,t+hN,2));
-//            glTexCoord2f(0.9,0.1);
+            glTexCoord2f(0.9,0.1);
             glVertex3f(TB->get(s+N,t+hN,0), TB->get(s+N,t+hN,1), aHE);
 
             glNormal3f(TB->getNormal(s+hN,t+N,0), TB->getNormal(s+hN,t+N,1), TB->getNormal(s+hN,t+N,2));
-//            glTexCoord2f(0.9,0.9);
+            glTexCoord2f(0.9,0.9);
             glVertex3f(TB->get(s+hN,t+N,0), TB->get(s+hN,t+N,1), aHD);
 
             glNormal3f(TB->getNormal(s+N,t+N,0), TB->getNormal(s+N,t+N,1), TB->getNormal(s+N,t+N,2));
-//            glTexCoord2f(0.9,0.1);
+            glTexCoord2f(0.9,0.1);
             glVertex3f(TB->get(s+N,t+N,0), TB->get(s+N,t+N,1), TB->get(s+N,t+N,2));
 
             glEnd();
         }
     }
     glPopMatrix();
+
+
 
 }
 
