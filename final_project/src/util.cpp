@@ -171,7 +171,7 @@ void utils::display(){
     if(collision_detection()){
         PLANE_SPEED = 0.0;
         plane_z=1.5;
-        std::cout << "Collision Detected" << std::endl;
+//        std::cout << "Collision Detected" << std::endl;
         // ToDo: Call smoke detection
     }
     //  Draw axes - no lighting from here on
