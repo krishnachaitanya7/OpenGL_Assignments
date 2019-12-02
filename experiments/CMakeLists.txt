@@ -1,6 +1,1 @@
-find_package(PkgConfig REQUIRED)
-pkg_search_module(GLFW REQUIRED glfw3)
-include_directories(${GLFW_INCLUDE_DIRS})
-file(COPY basic.shader DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-add_executable(experiment main.cpp)
-target_link_libraries(experiment ${GLFW_STATIC_LIBRARIES} GLEW glut GLU GL m pthread)
+

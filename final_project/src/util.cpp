@@ -35,9 +35,10 @@ void utils::display(){
     if(tick > 10){
         tick = 0;
     }
+
     //move the plane, keep it in the square
-    plane_y +=  PLANE_SPEED * cos(plane_yaw);
-    plane_x +=  PLANE_SPEED * sin(plane_yaw);
+    plane_y += PLANE_SPEED * cos(plane_yaw);
+    plane_x += PLANE_SPEED * sin(plane_yaw);
 
     float planeS = myTerrain->xToS(plane_x, plane_y); //s,t loc of plane
     float planeT = myTerrain->yToT(plane_x, plane_y);
@@ -46,23 +47,21 @@ void utils::display(){
     int N = myTerrain->getN();
 
     int shunted = 0;
-    if(planeS < 0){
+    if (planeS < 0) {
         planeS += terrainSideLen;
         shunted = 1;
-    }
-    else if(planeS >= terrainSideLen){
+    } else if (planeS >= terrainSideLen) {
         planeS -= terrainSideLen;
         shunted = 1;
     }
-    if(planeT < 0){
+    if (planeT < 0) {
         planeT += terrainSideLen;
         shunted = 1;
-    }
-    else if(planeT >= terrainSideLen){
+    } else if (planeT >= terrainSideLen) {
         planeT -= terrainSideLen;
         shunted = 1;
     }
-    if(shunted){  //do the work if need be
+    if (shunted) {  //do the work if need be
         plane_x = myTerrain->sToX(planeS, planeT);  //convert back
         plane_y = myTerrain->tToY(planeS, planeT);
     }
@@ -70,11 +69,11 @@ void utils::display(){
     // Clear the rendering window
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glShadeModel(SmoothShading == 1 ? GL_SMOOTH : GL_FLAT);
-    glMatrixMode( GL_MODELVIEW );			// Current matrix affects objects positions
-    glLoadIdentity();						// Initialize to the identity
+    glMatrixMode(GL_MODELVIEW);            // Current matrix affects objects positions
+    glLoadIdentity();                        // Initialize to the identity
 
-    glRotatef( Azimuth, 1.0, 0.0, 0.0 ); //use the azimuth angle to look
-    glRotatef( plane_yaw * 180.0 / PI, 0.0, 1.0, 0.0);  //yaw
+    glRotatef(Azimuth, 1.0, 0.0, 0.0); //use the azimuth angle to look
+    glRotatef(plane_yaw * 180.0 / PI, 0.0, 1.0, 0.0);  //yaw
     glTranslatef(-plane_x, -plane_alt, plane_y);  //translate to the plane's position
 
     //////////////////////////////////
@@ -92,37 +91,38 @@ void utils::display(){
     float forwardPlane_s = myTerrain->xToS(forwardPlane_x, forwardPlane_y);
     float forwardPlane_t = myTerrain->yToT(forwardPlane_x, forwardPlane_y);
 
-    for(int nS = -numGrid; nS <= numGrid; nS ++){
-        for(int nT = -numGrid; nT <= numGrid; nT ++){
+    for (int nS = -numGrid; nS <= numGrid; nS++) {
+        for (int nT = -numGrid; nT <= numGrid; nT++) {
             dispS = terrainLength * nS;
             dispT = terrainLength * nT;
-            for(int s = 0; s < myTerrain->getN(); s++){
-                for(int t = 0; t < myTerrain->getN(); t++){
+            for (int s = 0; s < myTerrain->getN(); s++) {
+                for (int t = 0; t < myTerrain->getN(); t++) {
 
-                    TerrainBlock *TB = myTerrain->getBlock(s,t);
-                    locX = TB->get(0,0,0);
-                    locY = TB->get(0,0,1);
+                    TerrainBlock *TB = myTerrain->getBlock(s, t);
+                    locX = TB->get(0, 0, 0);
+                    locY = TB->get(0, 0, 1);
                     locS = myTerrain->xToS(locX, locY) + dispS;
                     locT = myTerrain->yToT(locX, locY) + dispT;
 
                     float dS = locS - forwardPlane_s;
                     float dT = locT - forwardPlane_t;
-                    float dist = sqrt(dS*dS + dT*dT);  //dist from tile to plane
+                    float dist = sqrt(dS * dS + dT * dT);  //dist from tile to plane
 
-                    if(dist < viewRadius){  //only render in view
+                    if (dist < viewRadius) {  //only render in view
                         theta2 = atan2(dT, dS);  //get angle of tile
-                        thetaR = PI/2.0 - theta2; //theta2;
+                        thetaR = PI / 2.0 - theta2; //theta2;
                         thetaD = thetaR - plane_yaw;
 
-                        while(thetaD < - PI){
-                            thetaD += 2*PI;
+                        while (thetaD < -PI) {
+                            thetaD += 2 * PI;
                         }
-                        while(thetaD >= PI){
-                            thetaD -= 2*PI;
+                        while (thetaD >= PI) {
+                            thetaD -= 2 * PI;
                         }
 
-                        if(thetaD < PI / 2 && thetaD > -PI / 2){
-                            depth = (gradientDepth == 1 ? (viewRadius - dist) / viewRadius * maxRenderDepth : maxRenderDepth);
+                        if (thetaD < PI / 2 && thetaD > -PI / 2) {
+                            depth = (gradientDepth == 1 ? (viewRadius - dist) / viewRadius * maxRenderDepth
+                                                        : maxRenderDepth);
 
                             renderBlock(TB, depth, dispS, dispT);
                         }
@@ -131,6 +131,9 @@ void utils::display(){
             }
         }
     }
+    if(!display_terrain){
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
 
     glLoadIdentity();
     if (proj)
@@ -138,7 +141,9 @@ void utils::display(){
         double Ex = -2*dim*Sin(th)*Cos(ph);
         double Ey = +2*dim        *Sin(ph);
         double Ez = +2*dim*Cos(th)*Cos(ph);
-        gluLookAt(Ex,Ey,Ez , 0,0,0 , 0,Cos(ph),0);
+        gluLookAt(Ex,Ey,Ez , 0, plane_z, 0 , 0,Cos(ph),0);
+//        gluLookAt(Ex,Ey,Ez , 0,plane_z,0 , 0,Cos(ph),0); // Original
+
     }
         //  Orthogonal - set world orientation
     else
@@ -150,10 +155,18 @@ void utils::display(){
     //  Draw the model
     glPushMatrix();
     glRotatef(-180, 0.0, 1.0, 0.0);
+    glTranslatef(0.0, 0.0, plane_z);
     glScaled(scale,scale,scale);
     glCallList(obj);
     glPopMatrix();
+    if(collision_detection()){
+        PLANE_SPEED = 0.0;
+        plane_z=1.5;
+        std::cout << "Collision Detected" << std::endl;
+        // ToDo: Call smoke detection
+    }
     //  Draw axes - no lighting from here on
+    int len = 5;
 //    if (axes)
 //    {
 //        glBegin(GL_LINES);
@@ -187,6 +200,20 @@ void utils::display(){
 /*
  *  GLUT calls this routine when the window is resized
  */
+
+bool utils::collision_detection() {
+    float plane_lowest_y_point = -0.000578 + plane_z; // Obtained from the python file
+    float least_distance = 100000000.0; // Make it a large number, nearly infinity
+    for(float i: y_points){
+        if(i-plane_lowest_y_point < least_distance){
+            least_distance = i - plane_lowest_y_point ;
+        }
+    }
+//    std::cout << least_distance << std::endl;
+    return least_distance < -1.85;
+//    return false;
+
+}
 void utils::idle(){
     //  Elapsed time in seconds
     double t = glutGet(GLUT_ELAPSED_TIME)/1000.0;
@@ -207,18 +234,21 @@ void utils::special(int key,int x,int y){
         th -= 5;
         //  Up arrow key - increase elevation by 5 degrees
     else if (key == GLUT_KEY_UP){
-//        ph += 5;
-        Azimuth -= AngleStepSize;
-        if ( Azimuth > azimuth_max ) {
-            Azimuth = azimuth_max;
-        }}
+
+        plane_z-=0.1;
+        if(plane_z < -1){
+            plane_z = -1;
+            display_terrain = false;
+        }
+        }
         //  Down arrow key - decrease elevation by 5 degrees
     else if (key == GLUT_KEY_DOWN){
-//        ph -= 5;
-        Azimuth += AngleStepSize;
-        if ( Azimuth < azimuth_min ) {
-            Azimuth = azimuth_min;
-        }}
+
+        plane_z+=0.1;
+        if(plane_z >= -1){
+            display_terrain = true;
+        }
+        }
         //  PageUp key - increase dim
     else if (key == GLUT_KEY_PAGE_DOWN)
         dim += 0.1;
@@ -302,10 +332,13 @@ void utils::renderBlock(TerrainBlock* TB, float depth, float dispS, float dispT)
     int hN = N/2;  //the half N jump
 
     glPushMatrix();
+
     glRotatef(-90, 1.0, 0.0, 0.0);
-    glTranslatef(x,y,0);  //translate as appropriate
+    glTranslatef(x,y,0+plane_z);  //translate as appropriate
+
 
     //draw the triangle
+    y_points.clear();
     for(int s = 0; s < n; s+=N)
     {
 
@@ -358,6 +391,20 @@ void utils::renderBlock(TerrainBlock* TB, float depth, float dispS, float dispT)
             glVertex3f(TB->get(s+hN,t+N,0), TB->get(s+hN,t+N,1), aHD);
 
             glEnd();
+
+            y_points.push_back(TB->get(s,t,1));
+            y_points.push_back(TB->get(s+hN,t,1));
+            y_points.push_back(TB->get(s,t+hN,1));
+            y_points.push_back(TB->get(s+hN,t+hN,1));
+            y_points.push_back(TB->getNormal(s,t+N,1));
+            y_points.push_back(TB->get(s+hN,t+N,1));
+            y_points.push_back(TB->get(s+N,t,1));
+            y_points.push_back(TB->get(s+N,t+hN,1));
+            y_points.push_back(TB->get(s+N,t+N,1));
+            y_points.push_back(TB->get(s+hN,t+hN,1));
+            y_points.push_back(TB->get(s+N,t+hN,1));
+
+
 
             glBegin(GL_TRIANGLE_STRIP);
             glNormal3f(TB->getNormal(s+hN,t,0), TB->getNormal(s+hN,t,1), TB->getNormal(s+hN,t,2));

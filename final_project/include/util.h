@@ -1,6 +1,7 @@
 #ifndef OPENGL_ASSIGNMENTS_LORENZ_H
 #define OPENGL_ASSIGNMENTS_LORENZ_H
 
+#include <vector>
 #include "TerrainBlock.h"
 #include "Terrain.h"
 
@@ -24,12 +25,16 @@ public:
     static float Ylight;   //  Light elevation
     static int obj;          //  Object display list
     static float RGBA[4];  //  Colors
+    static float plane_z;
+    static bool display_terrain;
     static unsigned int textures[1];
+    static std::vector<float> y_points;
     static void display();
     static void idle();
     static void special(int key,int x,int y);
     static void key(unsigned char ch,int x,int y);
     static void reshape(int width,int height);
+    static bool collision_detection();
 
     static void renderBlock(TerrainBlock* TB, float depth, float dispS, float dispT);
     static float lerp(float u, float v, float a);

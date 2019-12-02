@@ -11,12 +11,13 @@
  * https://www.3dgep.com/multi-textured-terrain-in-opengl/
  * */
 
-int utils::axes=0;       /*  Display axes*/
+int utils::axes=1;       /*  Display axes*/
 int utils::mode=0;       //  Shader mode
 int utils::move=1;       //  Move light
 int utils::proj=1;       //  Projection type
 int utils::th=0;         //  Azimuth of view angle
 int utils::ph=0;         //  Elevation of view angle
+float utils::plane_z=-1.0;
 int utils::fov=55;       //  Field of view (for perspective)
 float utils::spc=1;     //  Specular intensity
 double utils::asp=1;    //  Aspect ratio
@@ -26,6 +27,7 @@ int utils::zh=90;        //  Light azimuth
 float utils::Ylight=2;
 float utils::RGBA[4] = {1,1,1,1};  //  Colors
 int utils::obj = 1;
+bool utils::display_terrain = true;
 
 float utils::NoEmit[4] = {0.0, 0.0, 0.0, 1.0};
 
@@ -85,8 +87,13 @@ int utils::gradientDepth = 0;  //if 1, then render with gradient depth   if 0, r
 ///////////////////////////
 int utils::WireFrameOn = 0;			// == 1 for wire frame mode
 int utils::CullBackFacesOn = 1;		// == 1 if culling back faces.
-int utils::SmoothShading = 1;          // == 1 if smooth, 0 if flat
+int utils::SmoothShading = 1;
+
+
+
+// == 1 if smooth, 0 if flat
 unsigned int utils::textures[1];
+std::vector<float> utils::y_points;
 
 
 
@@ -107,7 +114,7 @@ int main(int argc,char* argv[]){
     glutReshapeFunc(utils::reshape);
     glutSpecialFunc(utils::special);
     glutKeyboardFunc(utils::key);
-    glutIdleFunc(utils::idle);
+//    glutIdleFunc(utils::idle);
     //  Load object
     utils::obj = LoadOBJ("Plane.obj");
     utils::textures[0] = LoadTexBMP("crate.bmp");
