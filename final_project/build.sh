@@ -1,4 +1,4 @@
 #!/bin/bash
 cmake .
 make
-./hw6
+./final_project

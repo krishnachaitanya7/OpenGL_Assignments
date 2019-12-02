@@ -1,20 +1,19 @@
-# HomeWork - 6
+# Final Project
 ## By Kodur Krishna Chaitanya
 Instruction to build:
 
 1) Run build.sh: ./build.sh
-2) The hw5 executable should run automatically
+2) The final_project executable should run automatically
 
 Directions to use:   
-"+" : To zoom in  
-"-" : To zoom out  
-Arrow keys: To rotate the scene  
-"m" : To pause the movement of light source   
-"}" : Move light source Up  
-"{" : Move light source down  
-"t": To toggle between texture and non-texture scene
+↑: To move up
+↓: To move down
 
-Thank you for your time!
+In the project The plane flies over a desert(Texture which can be changed, to be implemented
+in the final submission), whenever it hits the mountainous surface collision is detected
+and plane stops right there. Right now I am working on implementing smoke when collision happens.
+
+Thank you for your time.
 
 
 

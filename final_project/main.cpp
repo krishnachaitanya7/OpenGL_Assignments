@@ -4,6 +4,13 @@
 #include "CSCIx229.h"
 #include "WireFrameScene.h"
 #include "TerrainBlock.h"
+#include "shader.h"
+
+#ifdef GL_VERSION_4_1
+#define MODE 11
+#else
+#define MODE 10
+#endif
 
 /*
  * Some Good Resources
@@ -91,6 +98,7 @@ int utils::SmoothShading = 1;
 
 
 
+
 // == 1 if smooth, 0 if flat
 unsigned int utils::textures[1];
 std::vector<float> utils::y_points;
@@ -106,6 +114,7 @@ int main(int argc,char* argv[]){
     //  Request double buffered, true color window with Z buffering at 600x600
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 
+
     glutInitWindowSize(600,600);
     glutCreateWindow("Final Project");
     //  Set callbacks
@@ -118,6 +127,8 @@ int main(int argc,char* argv[]){
     //  Load object
     utils::obj = LoadOBJ("Plane.obj");
     utils::textures[0] = LoadTexBMP("crate.bmp");
+//    Shader shader;
+//    shader.CreateShaderProg("shader.vertex", "shader.frag");
 
     //  Pass control to GLUT so it can interact with the user
     ErrCheck("init");

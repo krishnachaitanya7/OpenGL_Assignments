@@ -11,6 +11,15 @@
  *  OpenGL (GLUT) calls this routine to display the
  *
  */
+
+//struct Particle{
+//    glm::vec3 pos, speed;
+//    unsigned char r,g,b,a; // Color
+//    float size, angle, weight;
+//    float life; // Remaining life of the particle. if < 0 : dead and unused.
+//
+//};
+
 void utils::display(){
     glEnable( GL_DEPTH_TEST );	// Depth testing must be turned on
     glEnable(GL_LIGHTING);		// Enable lighting calculations
@@ -186,10 +195,7 @@ void utils::display(){
 //        Print("Z");
 //    }
     //  Display parameters
-    glWindowPos2i(5,5);
-    Print("Angle=%d,%d  Dim=%.1f Projection=%s",
-          th,ph,dim,proj?"Perpective":"Orthogonal");
-    //  Render the scene and make it visible
+
     ErrCheck("display");
     glFlush();
     glDisable(GL_TEXTURE_2D);
@@ -221,6 +227,7 @@ void utils::idle(){
     //  Tell GLUT it is necessary to redisplay the scene
     glutPostRedisplay();
 }
+
 
 /*
  *  GLUT calls this routine when an arrow key is pressed

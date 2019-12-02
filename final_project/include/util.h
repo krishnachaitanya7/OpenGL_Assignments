@@ -4,6 +4,17 @@
 #include <vector>
 #include "TerrainBlock.h"
 #include "Terrain.h"
+#include <glm/glm.hpp>
+#include <GL/gl.h>
+
+struct Particle {
+    glm::vec2 Position, Velocity;
+    glm::vec4 Color;
+    GLfloat Life;
+
+    Particle()
+            : Position(0.0f), Velocity(0.0f), Color(1.0f), Life(0.0f) { }
+};
 
 class utils {
 public:
@@ -35,6 +46,7 @@ public:
     static void key(unsigned char ch,int x,int y);
     static void reshape(int width,int height);
     static bool collision_detection();
+    static void particle_generator();
 
     static void renderBlock(TerrainBlock* TB, float depth, float dispS, float dispT);
     static float lerp(float u, float v, float a);
