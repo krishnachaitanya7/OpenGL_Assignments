@@ -167,13 +167,17 @@ void utils::display(){
     glTranslatef(0.0, 0.0, plane_z);
     glScaled(scale,scale,scale);
     glCallList(obj);
-    glPopMatrix();
+
     if(collision_detection()){
         PLANE_SPEED = 0.0;
         plane_z=1.5;
+
+//        PG = new ParticleGenerator(shaderint, textures[1], 10);
+//        PG->Draw();
 //        std::cout << "Collision Detected" << std::endl;
         // ToDo: Call smoke detection
     }
+    glPopMatrix();
     //  Draw axes - no lighting from here on
     int len = 5;
 //    if (axes)

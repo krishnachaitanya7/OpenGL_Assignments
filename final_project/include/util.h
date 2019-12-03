@@ -5,16 +5,9 @@
 #include "TerrainBlock.h"
 #include "Terrain.h"
 #include <glm/glm.hpp>
+#include <GL/glew.h>
 #include <GL/gl.h>
-
-struct Particle {
-    glm::vec2 Position, Velocity;
-    glm::vec4 Color;
-    GLfloat Life;
-
-    Particle()
-            : Position(0.0f), Velocity(0.0f), Color(1.0f), Life(0.0f) { }
-};
+#include "particle_generator.h"
 
 class utils {
 public:
@@ -38,7 +31,8 @@ public:
     static float RGBA[4];  //  Colors
     static float plane_z;
     static bool display_terrain;
-    static unsigned int textures[1];
+    static unsigned int textures[2];
+    static unsigned int shaderint;
     static std::vector<float> y_points;
     static void display();
     static void idle();
@@ -46,16 +40,12 @@ public:
     static void key(unsigned char ch,int x,int y);
     static void reshape(int width,int height);
     static bool collision_detection();
-    static void particle_generator();
 
+    static ParticleGenerator* PG;
     static void renderBlock(TerrainBlock* TB, float depth, float dispS, float dispT);
     static float lerp(float u, float v, float a);
     static void lerp(float* u, float* v, float a, int len, float* retval);
     static void initTerrain();
-    static void particles_generator();
-
-
-
     static float NoEmit[4];
 
 //Terrain material properties

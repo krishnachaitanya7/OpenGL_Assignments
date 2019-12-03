@@ -1,16 +1,11 @@
 #define GL_GLEXT_PROTOTYPES
+#include <GL/glew.h>
 #include <GL/glut.h>
 #include "include/util.h"
 #include "CSCIx229.h"
 #include "WireFrameScene.h"
 #include "TerrainBlock.h"
 #include "shader.h"
-
-#ifdef GL_VERSION_4_1
-#define MODE 11
-#else
-#define MODE 10
-#endif
 
 /*
  * Some Good Resources
@@ -100,13 +95,18 @@ int utils::SmoothShading = 1;
 
 
 // == 1 if smooth, 0 if flat
-unsigned int utils::textures[1];
+unsigned int utils::textures[2];
 std::vector<float> utils::y_points;
+
+//Particle Generator
+ParticleGenerator* utils::PG;
+unsigned int utils::shaderint;
+
 
 
 
 int main(int argc,char* argv[]){
-
+    glewExperimental = GL_TRUE;
     //  Initialize GLUT
     glutInit(&argc,argv);
     utils::initTerrain();
@@ -117,19 +117,26 @@ int main(int argc,char* argv[]){
 
     glutInitWindowSize(600,600);
     glutCreateWindow("Final Project");
+    if(glewInit() != GLEW_OK){
+        std::cout << "GLEW NOT OKAY!"<< std::endl;
+    }
     //  Set callbacks
+
     glClearColor(1.0, 1.0, 1.0, 0.0);
     glutDisplayFunc(utils::display);
     glutReshapeFunc(utils::reshape);
     glutSpecialFunc(utils::special);
     glutKeyboardFunc(utils::key);
+
 //    glutIdleFunc(utils::idle);
     //  Load object
     utils::obj = LoadOBJ("Plane.obj");
     utils::textures[0] = LoadTexBMP("crate.bmp");
-//    Shader shader;
-//    shader.CreateShaderProg("shader.vertex", "shader.frag");
-
+    utils::textures[1] = LoadTexBMP("crate1.bmp");
+    unsigned int shader_texture = LoadTexBMP("crate1.bmp");
+    Shader shader;
+    utils::shaderint = shader.CreateShaderProg("shader.vertex", "shader.frag");
+    glUseProgram(utils::shaderint);
     //  Pass control to GLUT so it can interact with the user
     ErrCheck("init");
     glutMainLoop();

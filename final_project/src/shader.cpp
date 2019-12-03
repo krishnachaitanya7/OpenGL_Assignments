@@ -104,6 +104,8 @@ int Shader::CreateShaderProg(char* VertFile,char* FragFile)
     glLinkProgram(prog);
     //  Check for errors
     PrintProgramLog(prog);
+    // Use the program
+//    glUseProgram(prog);
     //  Return name
     return prog;
 }
