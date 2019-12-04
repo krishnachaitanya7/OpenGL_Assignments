@@ -169,11 +169,14 @@ void utils::display(){
     glCallList(obj);
 
     if(collision_detection()){
+        glUseProgram(utils::shaderint);
         PLANE_SPEED = 0.0;
         plane_z=1.5;
 
-//        PG = new ParticleGenerator(shaderint, textures[1], 10);
-//        PG->Draw();
+
+        PG = new ParticleGenerator(shaderint, textures[1], 100000);
+        PG->Draw();
+        glUseProgram(0);
 //        std::cout << "Collision Detected" << std::endl;
         // ToDo: Call smoke detection
     }

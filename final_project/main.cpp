@@ -136,7 +136,7 @@ int main(int argc,char* argv[]){
     unsigned int shader_texture = LoadTexBMP("crate1.bmp");
     Shader shader;
     utils::shaderint = shader.CreateShaderProg("shader.vertex", "shader.frag");
-    glUseProgram(utils::shaderint);
+
     //  Pass control to GLUT so it can interact with the user
     ErrCheck("init");
     glutMainLoop();
