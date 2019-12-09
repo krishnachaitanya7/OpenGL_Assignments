@@ -38,6 +38,7 @@ void utils::display(){
     glEnable(GL_NORMALIZE);
     glEnable(GL_TEXTURE_2D);
     glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE);
+
 //    glColor3f(1,1,1);
     glBindTexture(GL_TEXTURE_2D,textures[0]);
     tick += timeStep;
@@ -169,14 +170,28 @@ void utils::display(){
     glCallList(obj);
 
     if(collision_detection()){
+        glScaled(1.0, 1.0, 1.0);
         glUseProgram(utils::shaderint);
         PLANE_SPEED = 0.0;
         plane_z=1.5;
 
-
-        PG = new ParticleGenerator(shaderint, textures[1], 100000);
+        if(!particlesinitialized){
+            PG = new ParticleGenerator(shaderint, textures[1], 100000);
+            PG->Draw();
+            particlesinitialized = true;
+        }
+        PG->Update(0.001, 1000);
         PG->Draw();
+
         glUseProgram(0);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA,GL_ONE);
+        glDisable(GL_DEPTH_TEST);
+
+        pe.draw();
+        glDisable(GL_BLEND);
+        glColor3f(1.0,1.0,1.0);
+
 //        std::cout << "Collision Detected" << std::endl;
         // ToDo: Call smoke detection
     }

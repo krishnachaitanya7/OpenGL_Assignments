@@ -7,6 +7,7 @@
 #include "TerrainBlock.h"
 #include "shader.h"
 
+
 /*
  * Some Good Resources
  * https://blogs.igalia.com/itoral/2016/10/13/opengl-terrain-renderer-rendering-the-terrain-mesh/
@@ -100,7 +101,9 @@ std::vector<float> utils::y_points;
 
 //Particle Generator
 ParticleGenerator* utils::PG;
+bool utils::particlesinitialized = false;
 unsigned int utils::shaderint;
+QdFireEngine utils::pe(1.0f, 0.2f, 0.0f, 0.5f);
 
 
 
@@ -136,6 +139,12 @@ int main(int argc,char* argv[]){
     unsigned int shader_texture = LoadTexBMP("crate1.bmp");
     Shader shader;
     utils::shaderint = shader.CreateShaderProg("shader.vertex", "shader.frag");
+    utils::pe.setLimit(-2, 2, -1, 3);
+    utils::pe.init(100);
+
+
+
+//    utils::pe = &pde;
 
     //  Pass control to GLUT so it can interact with the user
     ErrCheck("init");

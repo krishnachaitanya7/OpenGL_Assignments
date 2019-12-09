@@ -8,6 +8,7 @@
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include "particle_generator.h"
+#include "FireEngine.h"
 
 class utils {
 public:
@@ -42,6 +43,7 @@ public:
     static bool collision_detection();
 
     static ParticleGenerator* PG;
+    static bool particlesinitialized;
     static void renderBlock(TerrainBlock* TB, float depth, float dispS, float dispT);
     static float lerp(float u, float v, float a);
     static void lerp(float* u, float* v, float a, int len, float* retval);
@@ -107,6 +109,10 @@ public:
     static int SmoothShading;       // == 1 if smooth, 0 if flat
 
     static Terrain *myTerrain;
+
+    // Particle Engine
+    static QdFireEngine pe;
+
 
 };
 #endif //OPENGL_ASSIGNMENTS_LORENZ_H
