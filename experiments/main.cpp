@@ -24,8 +24,8 @@ void display(void)
 
 void init(void)
 {
-    pe.setLimit(-4, 20, -2, 30);
-    pe.init(1000);
+    pe.setLimit(-0.25, 0.5, -1, 1);
+    pe.init(10000);
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);

@@ -1,10 +1,3 @@
-/*	Ken Mazaika
-	February 23, 2005
-	Quagmire Particle Engine
-	Copyright 2005
-	http://home.comcast.net/~kjmaz
-  */
-
 #pragma once
 
 #include "qd.h"

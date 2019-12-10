@@ -103,13 +103,13 @@ int main(int argc,char* argv[]){
     utils::textures[1] = LoadTexBMP("crate1.bmp");
 
     utils::pe0.setLimit(-2, 2, -1, 3);
-    utils::pe0.init(1000);
+    utils::pe0.init(10000);
 
     utils::pe1.setLimit(-2, 2, -1, 3);
     utils::pe1.init(1000);
 
     utils::pe2.setLimit(-2, 2, -1, 3);
-    utils::pe2.init(1000);
+    utils::pe2.init(10000);
 
     utils::pe3.setLimit(-2, 2, -1, 3);
     utils::pe3.init(1000);
@@ -121,13 +121,13 @@ int main(int argc,char* argv[]){
     utils::pe5.init(1000);
 
     utils::pe6.setLimit(-2, 2, -1, 3);
-    utils::pe6.init(1000);
+    utils::pe6.init(10000);
 
     utils::pe7.setLimit(-2, 2, -1, 3);
-    utils::pe7.init(1000);
+    utils::pe7.init(10000);
 
     utils::pe8.setLimit(-2, 2, -1, 3);
-    utils::pe8.init(1000);
+    utils::pe8.init(10000);
 
     utils::pe9.setLimit(-2, 2, -1, 3);
     utils::pe9.init(1000);
@@ -136,19 +136,19 @@ int main(int argc,char* argv[]){
     utils::pe10.init(1000);
 
     utils::pe11.setLimit(-2, 2, -1, 3);
-    utils::pe11.init(1000);
+    utils::pe11.init(10000);
 
     utils::pe12.setLimit(-2, 2, -1, 3);
     utils::pe12.init(1000);
 
     utils::pe13.setLimit(-2, 2, -1, 3);
-    utils::pe13.init(1000);
+    utils::pe13.init(10000);
 
     utils::pe14.setLimit(-2, 2, -1, 3);
-    utils::pe14.init(1000);
+    utils::pe14.init(10000);
 
     utils::pe15.setLimit(-2, 2, -1, 3);
-    utils::pe15.init(1000);
+    utils::pe15.init(10000);
 
     utils::pe16.setLimit(-2, 2, -1, 3);
     utils::pe16.init(1000);

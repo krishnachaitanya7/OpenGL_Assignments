@@ -7,6 +7,8 @@
 
 
 #include "Particle.h"
+#include <cstring>
+#include <iostream>
 
 //Global texture to be accessed by each particle individually.  If the texture
 //was in each QdParticle object the memory wasted would be very great.
@@ -96,7 +98,8 @@ QdParticleEngine::QdParticleEngine()
 	m_bEngineActive = 0;
 	m_nAge = 0;
 	m_szImgPath = &m_szImgPathA[0];
-	m_szImgPath =  "particle.bmp";
+	std::string par = "particle.bmp";
+	m_szImgPath = const_cast<char *>(par.c_str());
 }
 
 QdParticleEngine::~QdParticleEngine()
