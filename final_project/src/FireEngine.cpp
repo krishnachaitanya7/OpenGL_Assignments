@@ -1,9 +1,3 @@
-/*	Ken Mazaika
-	February 23, 2005
-	Quagmire Particle Engine::Fire Engine
-
-  */
-
 #include "FireEngine.h"
 #include <math.h>
 
