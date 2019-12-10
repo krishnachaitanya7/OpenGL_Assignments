@@ -4,14 +4,14 @@
 #include "include/util.h"
 #include "CSCIx229.h"
 #include "TerrainBlock.h"
-#include "shader.h"
 #include <iostream>
 
 
 /*
- * Some Good Resources
+ * References
  * https://blogs.igalia.com/itoral/2016/10/13/opengl-terrain-renderer-rendering-the-terrain-mesh/
  * https://www.3dgep.com/multi-textured-terrain-in-opengl/
+ * https://www.codeproject.com/Articles/9673/Quagmire-Particle-Engine
  * */
 
 int utils::axes=1;
@@ -34,34 +34,21 @@ int utils::TRI_DEPTH = 8;
 int utils::TRI_BLOCKS = 10;
 Terrain *utils::myTerrain;
 
-////////////////////////
-///   Plane Model    ///
-////////////////////////
-
 //position
 float utils::plane_x = 33.0;  //using x & y space to represent the plane location
 float utils::plane_y = 10.0;
 float utils::plane_alt = 5.2;  //the plane altitude
 
 //dynamics
-float utils::PLANE_SPEED = 1.0;  //speed per tick
+float utils::PLANE_SPEED = 1.0;
 float utils::plane_yaw = 10.0;
-
-//gimbal
-float utils::Azimuth = -7.0f;	// Step three degrees at a time
+float utils::Azimuth = -7.0f;
 const float utils::timeStep = 0.01;
 float utils::tick = 0;
-const float utils::PI = 3.14159265f; //pi
-
-//misc
+const float utils::PI = 3.14159265f;
 float utils::maxRenderDepth = 3.0f;
 int utils::gradientDepth = 0;
 int utils::SmoothShading = 1;
-
-
-
-
-// == 1 if smooth, 0 if flat
 unsigned int utils::textures[2];
 std::vector<float> utils::y_points;
 QdFireEngine utils::pe0(1.0f, 0.2f, 0.0f, 0.5f);
