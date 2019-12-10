@@ -2,7 +2,7 @@ find_package(GLEW REQUIRED)
 include_directories(${GLEW_INCLUDE_DIRS})
 include_directories(include)
 ADD_LIBRARY(CSCIx229 src/project.c src/print.c src/object.c src/loadtexbmp.c src/fatal.c src/errcheck.c include/CSCIx229.h)
-add_executable(final_project main.cpp src/util.cpp src/TerrainBlock.cpp src/Terrain.cpp src/shader.cpp src/particle_generator.cpp
+add_executable(final_project main.cpp src/util.cpp src/TerrainBlock.cpp src/Terrain.cpp src/shader.cpp
         src/FireEngine.cpp src/Texture.cpp src/Particle.cpp)
 #[[
 Below file commands lets you copy all required files to the binary directory

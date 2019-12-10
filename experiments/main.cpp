@@ -3,6 +3,11 @@
 
 QdFireEngine pe(1.0f, 0.2f, 0.0f, 1.0f);
 
+float rand_float(){
+    double r = ((double) rand() / (RAND_MAX));
+    return (float)r;
+}
+
 void display(void)
 {
     glPushMatrix();
@@ -10,6 +15,7 @@ void display(void)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glColor3f(1.0,1.0,1.0);
     pe.draw();
+    pe.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
     glutSwapBuffers();
     glutPostRedisplay();
     glPopMatrix();

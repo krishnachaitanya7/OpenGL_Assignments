@@ -1,10 +1,12 @@
 #include <iostream>
+#include <random>
 #include "util.h"
 #define GL_GLEXT_PROTOTYPES
 #include <GL/glut.h>
 #include "CSCIx229.h"
 #include <math.h>
 #include <vector>
+#include <functional>
 #include "Terrain.h"
 
 /*
@@ -19,7 +21,10 @@
 //    float life; // Remaining life of the particle. if < 0 : dead and unused.
 //
 //};
-
+float utils::rand_float(){
+    double r = ((double) rand() / (RAND_MAX));
+    return (float)r;
+}
 void utils::display(){
     glEnable( GL_DEPTH_TEST );	// Depth testing must be turned on
     glEnable(GL_LIGHTING);		// Enable lighting calculations
@@ -170,25 +175,62 @@ void utils::display(){
     glCallList(obj);
 
     if(collision_detection()){
-        glScaled(1.0, 1.0, 1.0);
-        glUseProgram(utils::shaderint);
         PLANE_SPEED = 0.0;
         plane_z=1.5;
-
-        if(!particlesinitialized){
-            PG = new ParticleGenerator(shaderint, textures[1], 100000);
-            PG->Draw();
-            particlesinitialized = true;
-        }
-        PG->Update(0.001, 1000);
-        PG->Draw();
-
-        glUseProgram(0);
+        glTranslatef(0.0, 1.5, 0.0);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA,GL_ONE);
         glDisable(GL_DEPTH_TEST);
-
-        pe.draw();
+        pe0.draw();
+        pe0.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
+        glTranslatef(0.0, 0.5, 0.0);
+        pe1.draw();
+        pe1.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
+        glTranslatef(0, 0.5, 0.0);
+        pe2.draw();
+        pe2.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
+        glTranslatef(0.5, 0, 0.0);
+        pe3.draw();
+        pe3.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
+        glTranslatef(0.5, 0, 0.0);
+        pe4.draw();
+        pe4.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
+        glTranslatef(0.5, 0, 0.0);
+        pe5.draw();
+        pe5.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
+        glTranslatef(0.5, 0, 0.0);
+        pe6.draw();
+        pe6.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
+        glTranslatef(0.5, 0, 0.0);
+        pe7.draw();
+        pe7.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
+        glTranslatef(0.5, 0, 0.0);
+        pe8.draw();
+        pe8.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
+        glTranslatef(0.5, 0, 0.0);
+        pe9.draw();
+        pe9.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
+        glTranslatef(-4.0, 0, 0.0);
+        pe10.draw();
+        pe10.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
+        glTranslatef(-0.5, 0, 0.0);
+        pe11.draw();
+        pe11.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
+        glTranslatef(-0.5, 0, 0.0);
+        pe12.draw();
+        pe12.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
+        glTranslatef(-0.5, 0, 0.0);
+        pe13.draw();
+        pe13.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
+        glTranslatef(-0.5, 0, 0.0);
+        pe14.draw();
+        pe14.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
+        glTranslatef(-0.5, 0, 0.0);
+        pe15.draw();
+        pe15.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
+        glTranslatef(-0.5, 0, 0.0);
+        pe16.draw();
+        pe16.setDirection(rand()%1000, rand_float(), rand_float(), rand_float());
         glDisable(GL_BLEND);
         glColor3f(1.0,1.0,1.0);
 
@@ -239,7 +281,7 @@ bool utils::collision_detection() {
     }
 //    std::cout << least_distance << std::endl;
     return least_distance < -1.85;
-//    return false;
+//    return true;
 
 }
 void utils::idle(){

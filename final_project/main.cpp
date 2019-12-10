@@ -3,9 +3,9 @@
 #include <GL/glut.h>
 #include "include/util.h"
 #include "CSCIx229.h"
-#include "WireFrameScene.h"
 #include "TerrainBlock.h"
 #include "shader.h"
+#include <iostream>
 
 
 /*
@@ -14,8 +14,7 @@
  * https://www.3dgep.com/multi-textured-terrain-in-opengl/
  * */
 
-int utils::axes=1;       /*  Display axes*/
-int utils::mode=0;       //  Shader mode
+int utils::axes=1;
 int utils::move=1;       //  Move light
 int utils::proj=1;       //  Projection type
 int utils::th=0;         //  Azimuth of view angle
@@ -28,29 +27,8 @@ double utils::dim=3.0;   //  Size of world
 double utils::scale=0.4; //  Image scale
 int utils::zh=90;        //  Light azimuth
 float utils::Ylight=2;
-float utils::RGBA[4] = {1,1,1,1};  //  Colors
 int utils::obj = 1;
 bool utils::display_terrain = true;
-
-float utils::NoEmit[4] = {0.0, 0.0, 0.0, 1.0};
-
-//Terrain material properties
-float utils::TerrainShininess = 10;	// Specular exponent (we don't use specular)
-float utils::TerrainAmbDiff[4] =  {0.1, 0.4, 0.1, 1.0};  // The ambient/diffuse colors
-float utils::TerrainSpecular[4] = {0.0, 0.0, 0.0, 1.0};	//the specular color (none!)
-
-///////////////////////
-/// Lighting Values ///
-///////////////////////
-
-//ambient light
-float utils::ambientLight[4] = {1.0, 1.0, 1.0, 0.0};  //ambient scene (white) light
-float utils::Ltdiff[4] = {0.2,  0.2,  0.2, 1.0};
-float utils::Ltspec[4] = {0.2, 0.2, 0.2, 1.0};
-
-////////////////////////
-///   Model Values   ///
-////////////////////////
 
 int utils::TRI_DEPTH = 8;
 int utils::TRI_BLOCKS = 10;
@@ -67,29 +45,17 @@ float utils::plane_alt = 5.2;  //the plane altitude
 
 //dynamics
 float utils::PLANE_SPEED = 1.0;  //speed per tick
-float utils::plane_yaw = 10.0;  // yaw [rad]
-float utils::PLANE_YAW_RATE = 0.02;  //yaw rate [rad]
+float utils::plane_yaw = 10.0;
 
 //gimbal
-float utils::Azimuth = -7.0f;			// Rotated up or down by this amount
-float utils::azimuth_max = 40.0f;
-float utils::azimuth_min = 0.0f;
-float utils::AngleStepSize = 3.0f;		// Step three degrees at a time
+float utils::Azimuth = -7.0f;	// Step three degrees at a time
 const float utils::timeStep = 0.01;
 float utils::tick = 0;
-const float utils::AngleStepMax = 10.0f;
-const float utils::AngleStepMin = 0.1f;
 const float utils::PI = 3.14159265f; //pi
 
 //misc
 float utils::maxRenderDepth = 3.0f;
-int utils::gradientDepth = 0;  //if 1, then render with gradient depth   if 0, render with static depth
-
-///////////////////////////
-/// Global State Values ///
-///////////////////////////
-int utils::WireFrameOn = 0;			// == 1 for wire frame mode
-int utils::CullBackFacesOn = 1;		// == 1 if culling back faces.
+int utils::gradientDepth = 0;
 int utils::SmoothShading = 1;
 
 
@@ -98,12 +64,24 @@ int utils::SmoothShading = 1;
 // == 1 if smooth, 0 if flat
 unsigned int utils::textures[2];
 std::vector<float> utils::y_points;
-
-//Particle Generator
-ParticleGenerator* utils::PG;
-bool utils::particlesinitialized = false;
-unsigned int utils::shaderint;
-QdFireEngine utils::pe(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe0(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe1(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe2(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe3(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe4(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe5(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe6(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe7(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe8(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe9(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe10(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe11(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe12(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe13(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe14(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe15(1.0f, 0.2f, 0.0f, 0.5f);
+QdFireEngine utils::pe16(1.0f, 0.2f, 0.0f, 0.5f);
+//
 
 
 
@@ -125,7 +103,7 @@ int main(int argc,char* argv[]){
     }
     //  Set callbacks
 
-    glClearColor(1.0, 1.0, 1.0, 0.0);
+    glClearColor(0.0, 0.0, 0.0, 0.0);
     glutDisplayFunc(utils::display);
     glutReshapeFunc(utils::reshape);
     glutSpecialFunc(utils::special);
@@ -136,12 +114,57 @@ int main(int argc,char* argv[]){
     utils::obj = LoadOBJ("Plane.obj");
     utils::textures[0] = LoadTexBMP("crate.bmp");
     utils::textures[1] = LoadTexBMP("crate1.bmp");
-    unsigned int shader_texture = LoadTexBMP("crate1.bmp");
-    Shader shader;
-    utils::shaderint = shader.CreateShaderProg("shader.vertex", "shader.frag");
-    utils::pe.setLimit(-2, 2, -1, 3);
-    utils::pe.init(100);
 
+    utils::pe0.setLimit(-2, 2, -1, 3);
+    utils::pe0.init(1000);
+
+    utils::pe1.setLimit(-2, 2, -1, 3);
+    utils::pe1.init(1000);
+
+    utils::pe2.setLimit(-2, 2, -1, 3);
+    utils::pe2.init(1000);
+
+    utils::pe3.setLimit(-2, 2, -1, 3);
+    utils::pe3.init(1000);
+
+    utils::pe4.setLimit(-2, 2, -1, 3);
+    utils::pe4.init(1000);
+
+    utils::pe5.setLimit(-2, 2, -1, 3);
+    utils::pe5.init(1000);
+
+    utils::pe6.setLimit(-2, 2, -1, 3);
+    utils::pe6.init(1000);
+
+    utils::pe7.setLimit(-2, 2, -1, 3);
+    utils::pe7.init(1000);
+
+    utils::pe8.setLimit(-2, 2, -1, 3);
+    utils::pe8.init(1000);
+
+    utils::pe9.setLimit(-2, 2, -1, 3);
+    utils::pe9.init(1000);
+
+    utils::pe10.setLimit(-2, 2, -1, 3);
+    utils::pe10.init(1000);
+
+    utils::pe11.setLimit(-2, 2, -1, 3);
+    utils::pe11.init(1000);
+
+    utils::pe12.setLimit(-2, 2, -1, 3);
+    utils::pe12.init(1000);
+
+    utils::pe13.setLimit(-2, 2, -1, 3);
+    utils::pe13.init(1000);
+
+    utils::pe14.setLimit(-2, 2, -1, 3);
+    utils::pe14.init(1000);
+
+    utils::pe15.setLimit(-2, 2, -1, 3);
+    utils::pe15.init(1000);
+
+    utils::pe16.setLimit(-2, 2, -1, 3);
+    utils::pe16.init(1000);
 
 
 //    utils::pe = &pde;
