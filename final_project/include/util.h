@@ -12,21 +12,19 @@
 
 class utils {
 public:
-    /*
-     * Reference: ex13 from Moodle
-     * */
+
     static int axes;
     static int move;
     static int proj;
     static int th;
     static int ph;
-    static int fov;       //  Field of view (for perspective)
-    static float spc;     //  Specular intensity
-    static double asp;     //  Aspect ratio
-    static double dim;   //  Size of world
-    static double scale; //  Image scale
-    static int zh;        //  Light azimuth
-    static float Ylight;   //  Light elevation
+    static int fov;         
+    static float spc;       
+    static double asp;       
+    static double dim;     
+    static double scale;   
+    static int zh;          
+    static float Ylight;     
     static int obj;
     static float plane_z;
     static bool display_terrain;
@@ -54,23 +52,23 @@ public:
     static float plane_y;
     static float plane_alt;
 
-//dynamics
+ 
     static float PLANE_SPEED;
     static float plane_yaw;
 
-//gimbal
+ 
     static float Azimuth;
     static const float timeStep;
     static float tick;
-    static const float PI; //pi
-//misc
+    static const float PI;   
+ 
     static float maxRenderDepth;
     static int gradientDepth;
     static int SmoothShading;
 
     static Terrain *myTerrain;
 
-    // Particle Engine
+      
     static QdFireEngine pe0;
     static QdFireEngine pe1;
     static QdFireEngine pe2;
@@ -91,4 +89,4 @@ public:
 
 
 };
-#endif //OPENGL_ASSIGNMENTS_LORENZ_H
+#endif   

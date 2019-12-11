@@ -1,10 +1,3 @@
-/*	Ken Mazaika
-	February 23, 2005
-	Quagmire Particle Engine::Fire Engine
-
-  */
-
-
 #include "qd.h"
 #pragma once
 

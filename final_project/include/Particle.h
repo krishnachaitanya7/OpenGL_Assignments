@@ -5,19 +5,19 @@
 class QdParticle
 {
 protected:
-	Qd3dPoint m_ptUL;		//Upper Left corner to the square
-	Qd3dPoint m_ptLR;		//Lower right corner of the square
+	Qd3dPoint m_ptUL;		  
+	Qd3dPoint m_ptLR;		  
 
-	QdColor m_clrCurrent;	//Current color of the particle
-	QdColor m_clrFade;		//What increment the color by
+	QdColor m_clrCurrent;	  
+	QdColor m_clrFade;		  
 
-	Qd3dPoint m_ptDirection; //What to increment the object by
-	Qd3dPoint m_ptGravity;	//What to increment the object by
+	Qd3dPoint m_ptDirection;   
+	Qd3dPoint m_ptGravity;	  
 
-	int m_nFrames;			//How many times has the particle been displayed
-	float m_fAge;			//How many "seconds" elapsed (for gravity calculations)
+	int m_nFrames;			  
+	float m_fAge;			  
 
-	float m_fLife;			//Determine "life"
+	float m_fLife;			  
 	float m_fGravityFactor;
 	float m_fFadeLife;
 	int m_nParticle;
@@ -64,7 +64,7 @@ public:
 	int init(int nParticles);
 	int virtual resetParticles();
 
-	//reset a specific particle
+	  
 	virtual int particleDead(int nParticle);
 	int destroy();
 };

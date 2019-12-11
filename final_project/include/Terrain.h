@@ -6,20 +6,20 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
  
-#define RT3DIV2    0.8660254f  //used for translation from square to triangle space
-#define RT3DIV3    0.5773503f  //used for translate from traingle to square space
+#define RT3DIV2    0.8660254f    
+#define RT3DIV3    0.5773503f    
 
 class Terrain
 {
 
-	TerrainBlock **blocks;   //the blocks of terrain
-	int n;  //the dimension of the terrain.  How many blocks (nxn) we have
-	int N;  //the number of sub blocks in a triangle block.  = (1 << (d-1));
-	int d;  // the max depth to which the blocks are rendered
-	float H;  //the roughness value for the blocks
-	float minHeight;  //the min starting height of block generation  
-	float maxHeight;  //the max starting height of block generation
-	float blockLength;  //how long a block's side length is
+	TerrainBlock **blocks;     
+	int n;    
+	int N;    
+	int d;    
+	float H;    
+	float minHeight;    
+	float maxHeight;    
+	float blockLength;    
 
 public:
 	Terrain(int numBlocksSide, int depth, float roughness, float minheight, float maxheight, float blocklength);

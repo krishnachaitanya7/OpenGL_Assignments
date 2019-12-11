@@ -7,7 +7,7 @@
 
 Terrain::Terrain(int numBlocksSide, int depth, float roughness, float minheight, float maxheight, float blocklength)
 {
-	//save some vars
+	  
 	n = numBlocksSide;
 	d = depth;
 	N = (1 << (d - 1));
@@ -16,13 +16,13 @@ Terrain::Terrain(int numBlocksSide, int depth, float roughness, float minheight,
 	maxHeight = maxheight;
 	blockLength = blocklength;
 
-	//initialze the random number generator
+	  
 	srand((unsigned)time(0));  
 
 	int numBlocks = n*n;
-	blocks = new TerrainBlock *[numBlocks];  //create some new blocks
+	blocks = new TerrainBlock *[numBlocks];    
 
-	//now we want to fill the blocks
+	  
 	for(int s = 0; s < n; s++){
 		for(int t = 0; t < n; t++){
 			TerrainBlock *myTri = new TerrainBlock();
@@ -30,41 +30,41 @@ Terrain::Terrain(int numBlocksSide, int depth, float roughness, float minheight,
 			float S = s * blocklength;
 			float T = t * blocklength;
 
-			myTri->initMesh(depth, S, S + blocklength, T);   //init the mesh
+			myTri->initMesh(depth, S, S + blocklength, T);     
 
-			if(s > 0){  //hook up to the left
+			if(s > 0){    
 				myTri->meshWith(blocks[(s-1)*n + t],0); 
 			}
-			if(t > 0){  //hook up underneath
+			if(t > 0){    
 				myTri->meshWith(blocks[s*n + (t-1)],3); 
 			}
-			if(s == n-1){  //hook right to root
+			if(s == n-1){    
 				myTri->meshWith(blocks[(0)*n + t],2); 
 			}
-			if(t == n-1){  //hook up above to root
+			if(t == n-1){    
 				myTri->meshWith(blocks[(s)*n + 0],1); 
 			}
 
-			myTri->computeMesh(0.95f, 0.0f, 4.0f);  //compute the mesh
+			myTri->computeMesh(0.95f, 0.0f, 4.0f);    
 
-			blocks[s*n + t] = myTri;  //save it
+			blocks[s*n + t] = myTri;    
 		}
 	}
 
-	//now compute the average of the norms for all points
+	  
 	
 	long numTriangles = N*N*2;
 	for(int S = 0; S < n; S++){
 		for(int T = 0; T < n; T++){
 
-			TerrainBlock *TB = getBlock(S,T);  //grab the block
+			TerrainBlock *TB = getBlock(S,T);    
 
-			for(int s = 0; s <= N; s ++)  //run through the s direction
+			for(int s = 0; s <= N; s ++)    
 			{
-				for(int t = 0; t <= N; t ++) //run through the t direction
+				for(int t = 0; t <= N; t ++)   
 				{
 
-					//a given vertex has 6 triangles around it
+					  
 					float nsum[] = {0,0,0};
 
 					int tris[] = {0,0,0,
@@ -77,10 +77,10 @@ Terrain::Terrain(int numBlocksSide, int depth, float roughness, float minheight,
 						int triS = s + tris[3*j + 0];
 						int triT = t + tris[3*j + 1];
 						int dim = tris[3*j + 2];
-						TerrainBlock *tTB = getBlockAt(triS,triT,S,T);  //get the block this thingy is in
-						triS = tTB->fitIn(triS); //fit it inside the block
+						TerrainBlock *tTB = getBlockAt(triS,triT,S,T);    
+						triS = tTB->fitIn(triS);   
 						triT = tTB->fitIn(triT); 
-						for(int i = 0;  i < 3; i++) {   //add it
+						for(int i = 0;  i < 3; i++) {     
 							nsum[i] += tTB->getTriNorm(triS, triT, dim, i); 
 						}
 					}
@@ -90,7 +90,7 @@ Terrain::Terrain(int numBlocksSide, int depth, float roughness, float minheight,
 					nsum[1] /= mag;
 					nsum[2] /= mag;
 			
-					//save it
+					  
 					TB->setNormal(s,t,0,nsum[0]);
 					TB->setNormal(s,t,1,nsum[1]);
 					TB->setNormal(s,t,2,nsum[2]);
@@ -103,10 +103,10 @@ Terrain::Terrain(int numBlocksSide, int depth, float roughness, float minheight,
 
 Terrain::~Terrain()
 {
-//	for(int i = 0;  i < n*n; i++){
-//		delete [i] blocks;  //clear the block
-//	}
-	delete blocks;  //clear memory
+  
+  
+  
+	delete blocks;    
 }
 
 int Terrain::getN()
@@ -131,7 +131,7 @@ TerrainBlock *Terrain::getBlockAtST(float s, float t)
 	int indexS = 0;
 	int indexT = 0;
 
-	//get s index
+	  
 	while(s > blockLength){
 		s -= blockLength;
 		indexS ++;
@@ -141,7 +141,7 @@ TerrainBlock *Terrain::getBlockAtST(float s, float t)
 		indexS --;
 	}
 
-	//get t index
+	  
 	while(t > blockLength){
 		t -= blockLength;
 		indexT++;
@@ -166,13 +166,13 @@ TerrainBlock *Terrain::getBlockAtST(float s, float t)
 		indexS -= n;
 	}
 
-	return blocks[indexS*n + indexT];  //return the block
+	return blocks[indexS*n + indexT];    
 }
 
 TerrainBlock *Terrain::getBlock(int s, int t)
 {
 	
-	//bounded input
+	  
 	while(s < 0){
 		s += n;
 	}
@@ -189,16 +189,12 @@ TerrainBlock *Terrain::getBlock(int s, int t)
 	return blocks[s*n + t];
 }
 
-/**
- * Returns the traingle block which is at (S + s, T + t), where S & T are the big block
- * dimensions and s,t are the small block dimensions
- * this only works for blocks in the neighborhood of (S,T) +- 1
- */
+
 TerrainBlock *Terrain::getBlockAt(int s, int t, int S, int T)
 {
 
 	TerrainBlock *retval;
-	if(s >= 0 && s < N && t >= 0 && t < N){  //standard case, inside the mesh
+	if(s >= 0 && s < N && t >= 0 && t < N){    
 		retval = getBlock(S,T);
 	}
 	else if(s < 0 && t >= 0 && t < N){
@@ -229,50 +225,38 @@ TerrainBlock *Terrain::getBlockAt(int s, int t, int S, int T)
 	return retval;
 }
 
-/**
- * Converts from triangle space to rectangle space for dim x
- */
+
 float Terrain::xToS(float x, float y)
 {
 	return (x - RT3DIV3 * y);
 }
 
-/**
- * Converts from triangle space to rectangle space for dim y
- */
+
 float Terrain::yToT(float x, float y)
 {
 	return (RT3DIV3 * 2.0f * y);
 }
 
-/**
- * Converts from rectangle space to traingle space for dim s
- */
+
 float Terrain::sToX(float s, float t)
 {
 	return (s + 0.5f * t);
 	
 }
 
-/**
- * Converts from rectangle space to traingle space for dim t
- */
+
 float Terrain::tToY(float s, float t)
 {
 	return (RT3DIV2 * t);
 }
 
-/**
- * returns the side length of the blocks in the set
- */
+
 float Terrain::getSideLength()
 {
 	return blockLength;
 }
 
-/**
- * returns the side length of the full terrain set
- */
+
 float Terrain::getTerrainSideLength()
 {
 	return blockLength * n;

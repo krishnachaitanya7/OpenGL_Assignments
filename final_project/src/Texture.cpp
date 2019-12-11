@@ -19,7 +19,7 @@ int QdTexture::LoadFromBitmap(char *szPath)
 
 QdTexture::QdTexture()
 {
-	m_bAutoTexture = 1;  //Set to autotexture by default
+	m_bAutoTexture = 1;    
 }
 
 QdTexture::~QdTexture()

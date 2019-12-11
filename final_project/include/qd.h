@@ -6,7 +6,7 @@
 
 
 
-//Macros For Font Engine
+  
 #define PSI_FONT_ENGINE_VERSION 2.57
 #define PSI_FONT_BOLD 1
 #define PSI_FONT_ITALIC 2
@@ -19,14 +19,14 @@
 #define PSI_LINE_FONT 1
 #define PSI_POLYGON_FONT 0
 
-//Macros For Texture Engine
+  
 #define QD_NO_PATH_GIVEN 207
 #define QD_INVALID_RESOURCE 208
 #define QD_SUCCESS 1
 #define QD_NO_AUTO_TEXTURE 571
 #define QD_AUTO_TEXURE 572
 
-//For The Particle Engine
+  
 
 class Qd3dPoint
 {

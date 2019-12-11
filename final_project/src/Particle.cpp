@@ -1,25 +1,17 @@
-/*	Ken Mazaika
-	February 23, 2005
-	Quagmire Particle Engine
-	Copyright 2005
-	http://home.comcast.net/~kjmaz
-  */
-
-
 #include "Particle.h"
 #include <iostream>
 #include <cstring>
 
-//Global texture to be accessed by each particle individually.  If the texture
-//was in each QdParticle object the memory wasted would be very great.
+  
+  
 QdTexture g;
 
 
 
-/*  The Particle Object */
+
 QdParticle::QdParticle()
 {
-	//Assumed values if none are initiated
+	  
 	m_fAge = 0;
 	m_nFrames = 0;
 	m_fLife = 1.0f;
@@ -27,13 +19,13 @@ QdParticle::QdParticle()
 	
 }
 
-//Draws the particle to the screen
+  
 void QdParticle::draw()
 {
-	//Set color
+	  
 	glColor4f(m_clrCurrent.m_fR, m_clrCurrent.m_fG, m_clrCurrent.m_fB, m_clrCurrent.m_fA);
 
-	//Dont display particle on first frame of it's life
+	  
 	if(m_fLife ==1.0f)
 	{
 		glColor4f(0,0,0,0);
@@ -42,10 +34,10 @@ void QdParticle::draw()
 
 
 
-	//draw the square
+	  
 	g.SelectTexture();
 	glBegin(GL_QUADS);
-	//Texture coordinates make the texture pointed upwards without being twisted
+	  
 		glTexCoord2f(1,1); glVertex3f(m_ptUL.m_fX, m_ptUL.m_fY, m_ptUL.m_fZ);
 		glTexCoord2f(0,1); glVertex3f(m_ptLR.m_fX, m_ptUL.m_fY, m_ptUL.m_fZ);
 		glTexCoord2f(0,0); glVertex3f(m_ptLR.m_fX, m_ptLR.m_fY, m_ptUL.m_fZ);
@@ -56,7 +48,7 @@ void QdParticle::draw()
 void QdParticle::advance()
 {
 
-	//Move the quad in the direction it should be headed
+	  
 	m_ptUL.m_fX  += m_ptDirection.m_fX;
 	m_ptUL.m_fY  += m_ptDirection.m_fY;
 	m_ptUL.m_fZ  += m_ptDirection.m_fZ;
@@ -65,9 +57,9 @@ void QdParticle::advance()
 	m_ptLR.m_fY  += m_ptDirection.m_fY;
 	m_ptLR.m_fZ  += m_ptDirection.m_fZ;
 
-	//Add the force of gravity
-	//The formula for the force of gravity (without factoring friction from
-	//the air) is something like:  h = vit + 1/2 a t^2
+	  
+	  
+	  
 	m_ptUL.m_fX += m_ptGravity.m_fX * m_fAge *m_fAge;
 	m_ptUL.m_fY += m_ptGravity.m_fY* m_fAge *m_fAge;
 	m_ptUL.m_fZ += m_ptGravity.m_fZ* m_fAge *m_fAge;
@@ -76,7 +68,7 @@ void QdParticle::advance()
 	m_ptLR.m_fY += m_ptGravity.m_fY* m_fAge *m_fAge;
 	m_ptLR.m_fZ += m_ptGravity.m_fZ* m_fAge *m_fAge;
 
-	//Slowly fade the color
+	  
 	m_clrCurrent.m_fR+= m_clrFade.m_fR;
 	m_clrCurrent.m_fG+= m_clrFade.m_fG;
 	m_clrCurrent.m_fB+= m_clrFade.m_fB;
@@ -90,7 +82,7 @@ void QdParticle::advance()
 }
 
 
-/* The Particle Engine */
+
 
 QdParticleEngine::QdParticleEngine()
 {
@@ -286,7 +278,7 @@ int QdParticleEngine::setFadeLife(int nParticle, float fFadeLife)
 }
 
 
-//Set Limit Function used to disable limits after the boundaries are set
+  
 int QdParticleEngine::setLimit(bool bLimit)
 {
 	m_bLimit = bLimit;
@@ -295,7 +287,7 @@ int QdParticleEngine::setLimit(bool bLimit)
 
 int QdParticleEngine::setLimit(float fLimitL, float fLimitR, float fLimitB, float fLimitT)
 {
-	//Enable limit
+	  
 	m_bLimit = 1;
 
 	m_fLimitL = fLimitL;

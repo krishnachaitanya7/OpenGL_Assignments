@@ -1,7 +1,7 @@
 #include "FireEngine.h"
 #include <math.h>
 
-//Allow the easy change of a flame color, through setting it in the constructor
+  
 QdFireEngine::QdFireEngine(float fRed, float fGreen, float fBlue, float fAlpha)
 {
 	m_clrParticleColor.m_fA = fAlpha;
@@ -10,7 +10,7 @@ QdFireEngine::QdFireEngine(float fRed, float fGreen, float fBlue, float fAlpha)
 	m_clrParticleColor.m_fR = fRed;
 }
 
-//This initializes the particles/reinitializes particles that faded
+  
 int QdFireEngine::particleDead(int nParticle)
 {
 	int nCount = nParticle;
@@ -49,13 +49,13 @@ int QdFireEngine::particleDead(int nParticle)
 	return QD_SUCCESS;
 }
 
-//This function is called by default by init() and sets the particles with
-//particleDead.
+  
+  
 int QdFireEngine::resetParticles()
 {
 	int nCount=0;
 	
-	//Give the random number generator a seed
+	  
 	srand(time(NULL));
 
 	while(nCount != m_nParticles)
