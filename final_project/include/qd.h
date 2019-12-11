@@ -1,10 +1,3 @@
-/*	Ken Mazaika
-	February 23, 2005
-	Quantum Dynamics Header
-	Copyright 2005
-	http://home.comcast.net/~kjmaz
-  */
-
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>

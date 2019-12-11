@@ -53,6 +53,7 @@ int utils::SmoothShading = 1;
 unsigned int utils::textures[2];
 bool utils::toggletexture = true;
 bool utils::day_night = true;
+bool utils::fog = false;
 std::vector<float> utils::y_points;
 QdFireEngine utils::pe0(1.0f, 0.2f, 0.0f, 0.5f);
 QdFireEngine utils::pe1(1.0f, 0.2f, 0.0f, 0.5f);

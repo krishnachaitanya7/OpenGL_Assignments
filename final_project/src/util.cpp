@@ -49,6 +49,27 @@ void utils::display(){
     glEnable(GL_TEXTURE_2D);
     glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE);
 
+    // Test Fogs
+    if(fog) {
+        GLuint fogMode[] = {GL_EXP, GL_EXP2, GL_LINEAR};   // Storage For Three Types Of Fog
+        GLuint fogfilter = 1;                    // Which Fog To Use
+        GLfloat fogColor[4] = {0.5f, 0.5f, 0.5f, 1.0f};      // Fog Color
+        glClearColor(0.5f, 0.5f, 0.5f, 1.0f);          // We'll Clear To The Color Of The Fog ( Modified )
+
+        glFogi(GL_FOG_MODE, fogMode[fogfilter]);        // Fog Mode
+        glFogfv(GL_FOG_COLOR, fogColor);            // Set Fog Color
+        glFogf(GL_FOG_DENSITY, 0.09f);              // How Dense Will The Fog Be
+        glHint(GL_FOG_HINT, GL_DONT_CARE);          // Fog Hint Value
+        glFogf(GL_FOG_START, 0.0f);             // Fog Start Depth
+        glFogf(GL_FOG_END, 1.0f);               // Fog End Depth
+        glEnable(GL_FOG);
+    } else{
+        glDisable(GL_FOG);
+    }
+
+
+    // End
+
 //    glColor3f(1,1,1);
     if(toggletexture){
         glBindTexture(GL_TEXTURE_2D,textures[0]);
@@ -392,12 +413,11 @@ void utils::key(unsigned char ch,int x,int y){
         PLANE_SPEED = 1.0;
     }
     else if(ch == 'd'){
-        if(day_night){
-            day_night = false;
-        } else{
-            day_night = true;
-        }
+        day_night = !day_night;
 
+    }
+    else if(ch == 'g'){
+        fog = !fog;
     }
     //  Reproject
     Project(proj?fov:0,asp,dim);

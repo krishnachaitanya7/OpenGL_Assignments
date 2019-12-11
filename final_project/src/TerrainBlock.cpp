@@ -1,11 +1,3 @@
-/*
- * TerrainBlock.cpp
- *
- * author: Tim Wheeler
- *
- * A block of mid-point displaced terrain
- */
-
 #include "TerrainBlock.h"
 #include <iostream> 
 #include <ctime> 
@@ -19,18 +11,7 @@ TerrainBlock::TerrainBlock()
 	n = 0;
 }
 
-/**
- * Generate a new terrainb lock of depth d
- * INPUT:
- *   int d:               how many times to sub-divide the block
- *   float H:             determines the smoothness of the midpoint displacement.  H = 0.2 is rough, H = 0.8 is smooth
- *   float minHeight:     the minimum height of the block
- *   float maxHeight:     the maximum height of the block
- *   float minX:          the minimum X of the block
- *   float maxX:          the maximum X of the block
- *   float miny:          the minimum Y of the block
- *
- */
+
 TerrainBlock::TerrainBlock(int d, float H, float minHeight, float maxHeight, float minX, float maxX, float minY)
 {
 
@@ -111,16 +92,7 @@ TerrainBlock::TerrainBlock(int d, float H, float minHeight, float maxHeight, flo
 		}
 	}
 
-	// calcualate the vertex light normals:
-	// idea from: http://meshlabstuff.blogspot.com/2009/04/on-computation-of-vertex-normals.html
-	// Compute an area weighted average of the normals of all the faces incident on the vertex. 
-	// This is the classical approach, very handy, just because if you compute your face normals using 
-	// a simple cross product between two edges of a triangle, you get for free a normal vector whose 
-	// length is twice the triangle area. So just summing the un-normalized cross products gives you 
-	// the right weights. Referred many many times as THE method for computing per vertex normals.
 
-
-	//start by finding the normal for each traingle in the scene
 	long numTriangles = n*n*2;  //how many triangles we have
 	float* triangleNorms = new float[numTriangles*3];  //allocate a temp array
 
@@ -341,16 +313,6 @@ void TerrainBlock::computeMesh(float H, float minHeight, float maxHeight)
 		}
 	}
 
-	// calcualate the vertex light normals:
-	// idea from: http://meshlabstuff.blogspot.com/2009/04/on-computation-of-vertex-normals.html
-	// Compute an area weighted average of the normals of all the faces incident on the vertex. 
-	// This is the classical approach, very handy, just because if you compute your face normals using 
-	// a simple cross product between two edges of a triangle, you get for free a normal vector whose 
-	// length is twice the triangle area. So just summing the un-normalized cross products gives you 
-	// the right weights. Referred many many times as THE method for computing per vertex normals.
-
-
-	//start by finding the normal for each traingle in the scene
 	long numTriangles = n*n*2;  //how many triangles we have
 	triangleNorms = new float[numTriangles*3];  //allocate a temp array
 

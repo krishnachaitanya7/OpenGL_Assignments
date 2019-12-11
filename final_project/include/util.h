@@ -33,6 +33,7 @@ public:
     static unsigned int textures[2];
     static bool toggletexture;
     static bool day_night;
+    static bool fog;
     static std::vector<float> y_points;
     static void display();
     static void idle();
