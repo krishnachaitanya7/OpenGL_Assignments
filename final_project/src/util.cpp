@@ -26,6 +26,11 @@ float utils::rand_float(){
     return (float)r;
 }
 void utils::display(){
+    if(day_night){
+        glClearColor(0.0, 0.0, 0.0, 0.0);
+    } else{
+        glClearColor(1.0, 1.0, 1.0, 0.0);
+    }
     glEnable( GL_DEPTH_TEST );	// Depth testing must be turned on
     glEnable(GL_LIGHTING);		// Enable lighting calculations
     glEnable(GL_LIGHT0);  //light from above
@@ -45,7 +50,13 @@ void utils::display(){
     glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_MODULATE);
 
 //    glColor3f(1,1,1);
-    glBindTexture(GL_TEXTURE_2D,textures[0]);
+    if(toggletexture){
+        glBindTexture(GL_TEXTURE_2D,textures[0]);
+//        toggletexture = false;
+    } else{
+        glBindTexture(GL_TEXTURE_2D,textures[1]);
+//        toggletexture = true;
+    }
     tick += timeStep;
     if(tick > 10){
         tick = 0;
@@ -367,6 +378,27 @@ void utils::key(unsigned char ch,int x,int y){
         Ylight += 0.1;
     else if (ch == '-')
         Ylight -= 0.1;
+    else if(ch == 't'){
+        if(toggletexture){
+            toggletexture = false;
+        } else{
+            toggletexture = true;
+        }
+    }
+    else if(ch == 'b'){
+        PLANE_SPEED = -1.0;
+    }
+    else if(ch == 'f'){
+        PLANE_SPEED = 1.0;
+    }
+    else if(ch == 'd'){
+        if(day_night){
+            day_night = false;
+        } else{
+            day_night = true;
+        }
+
+    }
     //  Reproject
     Project(proj?fov:0,asp,dim);
     //  Tell GLUT it is necessary to redisplay the scene
@@ -446,19 +478,19 @@ void utils::renderBlock(TerrainBlock* TB, float depth, float dispS, float dispT)
             glVertex3f(TB->get(s+hN,t,0), TB->get(s+hN,t,1), aHA);
 
             glNormal3f(TB->getNormal(s,t+hN,0),TB->getNormal(s,t+hN,1),TB->getNormal(s,t+hN,2));
-            glTexCoord2f(0,0);
+            glTexCoord2f(1,1);
             glVertex3f(TB->get(s,t+hN,0), TB->get(s,t+hN,1), aHB);
 
             glNormal3f(TB->getNormal(s+hN,t+hN,0),TB->getNormal(s+hN,t+hN,1),TB->getNormal(s+hN,t+hN,2));
-            glTexCoord2f(0.9,0.1);
+            glTexCoord2f(1,0);
             glVertex3f(TB->get(s+hN,t+hN,0), TB->get(s+hN,t+hN,1), aHC);
 
             glNormal3f(TB->getNormal(s,t+N,0), TB->getNormal(s,t+N,1), TB->getNormal(s,t+N,2));
-            glTexCoord2f(0.9,0.9);
+            glTexCoord2f(0,0);
             glVertex3f(TB->get(s,t+N,0), TB->get(s,t+N,1), TB->get(s,t+N,2));
 
             glNormal3f(TB->getNormal(s+hN,t+N,0), TB->getNormal(s+hN,t+N,1), TB->getNormal(s+hN,t+N,2));
-            glTexCoord2f(0.9,0.1);
+            glTexCoord2f(1,1);
             glVertex3f(TB->get(s+hN,t+N,0), TB->get(s+hN,t+N,1), aHD);
 
             glEnd();
@@ -479,27 +511,27 @@ void utils::renderBlock(TerrainBlock* TB, float depth, float dispS, float dispT)
 
             glBegin(GL_TRIANGLE_STRIP);
             glNormal3f(TB->getNormal(s+hN,t,0), TB->getNormal(s+hN,t,1), TB->getNormal(s+hN,t,2));
-            glTexCoord2f(0.1,0.9);
+            glTexCoord2f(0,0);
             glVertex3f(TB->get(s+hN,t,0), TB->get(s+hN,t,1), aHA);
 
             glNormal3f(TB->getNormal(s+N,t,0), TB->getNormal(s+N,t,1), TB->getNormal(s+N,t,2));
-            glTexCoord2f(0.1,0.1);
+            glTexCoord2f(0,1);
             glVertex3f(TB->get(s+N,t,0), TB->get(s+N,t,1), TB->get(s+N,t,2));
 
             glNormal3f(TB->getNormal(s+hN,t+hN,0), TB->getNormal(s+hN,t+hN,1), TB->getNormal(s+hN,t+hN,2));
-            glTexCoord2f(0.9,0.9);
+            glTexCoord2f(1,1);
             glVertex3f(TB->get(s+hN,t+hN,0), TB->get(s+hN,t+hN,1), aHC);
 
             glNormal3f(TB->getNormal(s+N,t+hN,0), TB->getNormal(s+N,t+hN,1), TB->getNormal(s+N,t+hN,2));
-            glTexCoord2f(0.9,0.1);
+            glTexCoord2f(1,0);
             glVertex3f(TB->get(s+N,t+hN,0), TB->get(s+N,t+hN,1), aHE);
 
             glNormal3f(TB->getNormal(s+hN,t+N,0), TB->getNormal(s+hN,t+N,1), TB->getNormal(s+hN,t+N,2));
-            glTexCoord2f(0.9,0.9);
+            glTexCoord2f(0,0);
             glVertex3f(TB->get(s+hN,t+N,0), TB->get(s+hN,t+N,1), aHD);
 
             glNormal3f(TB->getNormal(s+N,t+N,0), TB->getNormal(s+N,t+N,1), TB->getNormal(s+N,t+N,2));
-            glTexCoord2f(0.9,0.1);
+            glTexCoord2f(1,1);
             glVertex3f(TB->get(s+N,t+N,0), TB->get(s+N,t+N,1), TB->get(s+N,t+N,2));
 
             glEnd();

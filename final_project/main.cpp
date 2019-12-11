@@ -11,6 +11,7 @@
  * References
  * https://blogs.igalia.com/itoral/2016/10/13/opengl-terrain-renderer-rendering-the-terrain-mesh/
  * https://www.3dgep.com/multi-textured-terrain-in-opengl/
+ * http://tim.hibal.org/blog/fractal-terrain-midpoint-displacement-algorithm/
  * https://www.codeproject.com/Articles/9673/Quagmire-Particle-Engine
  * */
 
@@ -50,6 +51,8 @@ float utils::maxRenderDepth = 3.0f;
 int utils::gradientDepth = 0;
 int utils::SmoothShading = 1;
 unsigned int utils::textures[2];
+bool utils::toggletexture = true;
+bool utils::day_night = true;
 std::vector<float> utils::y_points;
 QdFireEngine utils::pe0(1.0f, 0.2f, 0.0f, 0.5f);
 QdFireEngine utils::pe1(1.0f, 0.2f, 0.0f, 0.5f);
@@ -84,13 +87,13 @@ int main(int argc,char* argv[]){
 
 
     glutInitWindowSize(600,600);
-    glutCreateWindow("Final Project");
+    glutCreateWindow("Kodur Krishna Chaitanya: Final Project");
     if(glewInit() != GLEW_OK){
         std::cout << "GLEW NOT OKAY!"<< std::endl;
     }
     //  Set callbacks
 
-    glClearColor(0.0, 0.0, 0.0, 0.0);
+//    glClearColor(0.0, 0.0, 0.0, 0.0);
     glutDisplayFunc(utils::display);
     glutReshapeFunc(utils::reshape);
     glutSpecialFunc(utils::special);

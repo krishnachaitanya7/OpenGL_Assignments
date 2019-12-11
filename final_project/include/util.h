@@ -16,10 +16,10 @@ public:
      * Reference: ex13 from Moodle
      * */
     static int axes;
-    static int move;       //  Move light
-    static int proj;       //  Projection type
-    static int th;         //  Azimuth of view angle
-    static int ph;         //  Elevation of view angle
+    static int move;
+    static int proj;
+    static int th;
+    static int ph;
     static int fov;       //  Field of view (for perspective)
     static float spc;     //  Specular intensity
     static double asp;     //  Aspect ratio
@@ -31,7 +31,8 @@ public:
     static float plane_z;
     static bool display_terrain;
     static unsigned int textures[2];
-    static unsigned int shaderint;
+    static bool toggletexture;
+    static bool day_night;
     static std::vector<float> y_points;
     static void display();
     static void idle();

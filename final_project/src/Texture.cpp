@@ -1,11 +1,3 @@
-/*	Ken Mazaika
-	February 23, 2005
-	Texture Engine
-	Copyright 2005
-	http://home.comcast.net/~kjmaz
-  */
-
-
 #include "Texture.h"
 #include "CSCIx229.h"
 

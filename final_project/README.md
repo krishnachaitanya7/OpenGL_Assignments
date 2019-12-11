@@ -8,12 +8,12 @@ Instruction to build:
 Directions to use:   
 ↑: To move up
 ↓: To move down
+b: To move backwards
+d: Toggle between day and night
+t: To toggle between sand and grass texture
 
-In the project The plane flies over a desert(Texture which can be changed, to be implemented
-in the final submission), whenever it hits the mountainous surface collision is detected
-and plane stops right there. Right now I am working on implementing smoke when collision happens.
+## Project Overview
 
-Thank you for your time.
 
 
 
