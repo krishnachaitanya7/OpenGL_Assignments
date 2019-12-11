@@ -34,6 +34,9 @@ References:
 - https://www.codeproject.com/Articles/9673/Quagmire-Particle-Engine 
 - https://nehe.gamedev.net/tutorial/cool_looking_fog/19001/
 
+## Project Gif
+![](project.gif)
+
 
 Finally I want to thank Prof for this wonderful class and the TA's who have been nothing but helpful
 who also helped me outside the office hours. Thank you.
