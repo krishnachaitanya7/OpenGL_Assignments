@@ -26,6 +26,8 @@ Special features of this project are:
 
 This final update also addresses Prof's comments if the glider can fly backwards
 
+
+
 References:  
 - https://blogs.igalia.com/itoral/2016/10/13/opengl-terrain-renderer-rendering-the-terrain-mesh/
 - https://www.3dgep.com/multi-textured-terrain-in-opengl/
