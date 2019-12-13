@@ -35,6 +35,7 @@ References:
 - http://glampert.com/2014/01-19/particles/
 - https://www.codeproject.com/Articles/9673/Quagmire-Particle-Engine 
 - https://nehe.gamedev.net/tutorial/cool_looking_fog/19001/
+- http://stevelosh.com/blog/2016/02/midpoint-displacement/
 
 ## Project Gif
 ![](final_project/project.gif)
