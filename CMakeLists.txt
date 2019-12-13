@@ -8,9 +8,6 @@ set(CMAKE_CXX_STANDARD 14)
 link_directories(${CMAKE_SOURCE_DIR}/final_project)
 add_subdirectory(final_project)
 
-link_directories(${CMAKE_SOURCE_DIR}/experiments)
-add_subdirectory(experiments)
-
 #include(homework_0/CMakeLists.txt)
 #include(homework_2/CMakeLists.txt)
 #include(homework_3/CMakeLists.txt)
