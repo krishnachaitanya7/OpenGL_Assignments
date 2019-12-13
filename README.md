@@ -20,7 +20,7 @@ Whenever the super cub touches the mountains, it stops there, and fire erupts. I
 To toggle between fog and no fog press "g". 
 
 Special features of this project are:  
-- automatic Terrain Generation using fractals
+- automatic Terrain Generation using fractals and midpoint displacement theorem
 - Fire using particle System when super cub erupts into flames
 - Fog
 
