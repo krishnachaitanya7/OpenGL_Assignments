@@ -14,17 +14,17 @@ t: To toggle between sand and grass texture
 g: To toggle between fog and no fog  
 
 ## Project Overview
-The view consists of a glider airplane that glides over dunes or rocky mountains (According to Texture, press "t" to toggle).  Toggling between day and night can be done by pressing "d". 
-The glider can move upward (by pressing "↑"), downward(by pressing "↓"),  backward(by pressing "b"), and forward (by pressing "f"). 
-Whenever the glider touches the mountains, it stops there, and fire erupts. It cannot move after this. At this point, restart the program. 
+The view consists of a super cub airplane that glides over dunes or rocky mountains (According to Texture, press "t" to toggle).  Toggling between day and night can be done by pressing "d". 
+The super cub can move upward (by pressing "↑"), downward(by pressing "↓"),  backward(by pressing "b"), and forward (by pressing "f"). 
+Whenever the super cub touches the mountains, it stops there, and fire erupts. It cannot move after this. At this point, restart the program. 
 To toggle between fog and no fog press "g". 
 
 Special features of this project are:  
 - automatic Terrain Generation using fractals
-- Fire using particle System when glider erupts into flames
+- Fire using particle System when super cub erupts into flames
 - Fog
 
-This final update also addresses Prof's comments if the glider can fly backwards
+This final update also addresses Prof's comments if the super cub can fly backwards
 
 
 
