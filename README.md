@@ -24,7 +24,7 @@ Special features of this project are:
 - Fire using particle System when super cub erupts into flames
 - Fog
 
-This final update also addresses Prof's comments if the super cub can fly backwards
+This final update also addresses Prof's comments if the super cub can fly backwards.
 
 
 
